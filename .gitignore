@@ -18,3 +18,12 @@
 # Ignore Gradle build output directory
 build
 logs
+node_modules
+
+.env*
+bin
+!/package.json
+!/package-lock.json
+!/.gitignore
+!/web/package.json
+!/scripts/
