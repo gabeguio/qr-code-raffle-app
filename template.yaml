@@ -1,10 +1,9 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   Qr Code Raffle App
 
 Parameters:
-
   CognitoDomain:
     Type: String
     Description: A name for the cognito Domain
@@ -43,11 +42,10 @@ Globals:
           UserPoolArn: !GetAtt UserPool.Arn
 
 Resources:
-
   #-----------------------------------------------------
   # Cognito Configuration for user management
   #-----------------------------------------------------
-  
+
   UserPool:
     Type: AWS::Cognito::UserPool
     Properties:
@@ -57,7 +55,7 @@ Resources:
             Priority: 1
       UsernameAttributes:
         - email
-      UsernameConfiguration: 
+      UsernameConfiguration:
         CaseSensitive: false
       AutoVerifiedAttributes:
         - email
@@ -80,15 +78,15 @@ Resources:
       CallbackURLs:
         - http://localhost:8000
         - !If
-            - DeployCloudFront
-            - !Sub "https://${CloudfrontDistribution.DomainName}"
-            - !Ref "AWS::NoValue"
+          - DeployCloudFront
+          - !Sub "https://${CloudfrontDistribution.DomainName}"
+          - !Ref "AWS::NoValue"
       LogoutURLs:
         - http://localhost:8000
         - !If
-            - DeployCloudFront
-            - !Sub "https://${CloudfrontDistribution.DomainName}"
-            - !Ref "AWS::NoValue"
+          - DeployCloudFront
+          - !Sub "https://${CloudfrontDistribution.DomainName}"
+          - !Ref "AWS::NoValue"
       AllowedOAuthFlows:
         - code
         - implicit
@@ -107,17 +105,16 @@ Resources:
       Domain: !Ref CognitoDomain
       UserPoolId: !Ref UserPool
 
-
   #-----------------------------------------------------
   # CloudFront Configuration
   #-----------------------------------------------------
 
   CloudFrontOriginAccessIdentity:
-    Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
+    Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
     Condition: DeployCloudFront
     Properties:
       CloudFrontOriginAccessIdentityConfig:
-        Comment: 'Serverless frontend website'
+        Comment: "Serverless frontend website"
 
   CloudfrontDistribution:
     Type: "AWS::CloudFront::Distribution"
@@ -137,11 +134,11 @@ Resources:
             S3OriginConfig:
               # Restricting Bucket access through an origin access identity
               OriginAccessIdentity:
-                Fn::Sub: 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
+                Fn::Sub: "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
         # To connect the CDN to the origins you need to specify behaviours
         DefaultCacheBehavior:
           # Compress resources automatically ( gzip )
-          Compress: 'true'
+          Compress: "true"
           AllowedMethods:
             - GET
             - HEAD
@@ -149,7 +146,7 @@ Resources:
           ForwardedValues:
             QueryString: false
           TargetOriginId: s3-website
-          ViewerProtocolPolicy : redirect-to-https
+          ViewerProtocolPolicy: redirect-to-https
           CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
 
   S3BucketPolicy:
@@ -160,14 +157,12 @@ Resources:
       PolicyDocument:
         # Restricting access to cloudfront only.
         Statement:
-          -
-            Effect: Allow
-            Action: 's3:GetObject'
+          - Effect: Allow
+            Action: "s3:GetObject"
             Resource:
               - !Sub "arn:aws:s3:::${S3Bucket}/*"
             Principal:
               AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}"
-
 
   #-----------------------------------------------------
   # Role/Permissions/Policy Configuration
@@ -177,44 +172,44 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       ManagedPolicyArns:
-        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaRole'
-        - 'arn:aws:iam::aws:policy/AWSLambdaExecute'
+        - "arn:aws:iam::aws:policy/service-role/AWSLambdaRole"
+        - "arn:aws:iam::aws:policy/AWSLambdaExecute"
       AssumeRolePolicyDocument:
-        Version: "2012-10-17" 
-        Statement: 
+        Version: "2012-10-17"
+        Statement:
           - Effect: Allow
             Principal:
               Service:
                 - lambda.amazonaws.com
             Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
       Policies:
-        - PolicyName: 'WriteToCloudWatch'
+        - PolicyName: "WriteToCloudWatch"
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
-            - Effect: Allow
-              Action:
-                - logs:CreateLogGroup
-                - logs:CreateLogStream
-                - logs:PutLogEvents
-                - cloudwatch:PutMetricData
-              Resource: '*'
-        - PolicyName: 'AccessScannersTable'
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - cloudwatch:PutMetricData
+                Resource: "*"
+        - PolicyName: "AccessScannersTable"
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/scanners"
 
-        - PolicyName: 'AccessVisitsTable'
+        - PolicyName: "AccessVisitsTable"
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
-            - Effect: Allow
-              Action: dynamodb:*
-              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/visits"
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/visits"
 
   #-----------------------------------------------------
   # Lambda Functions Configuration
@@ -239,7 +234,7 @@ Resources:
             Path: /project/{projectId}
             Method: get
             Auth:
-              Authorizer: 'NONE'
+              Authorizer: "NONE"
 
   #-----------------------------------------------------
   # DynamoDB Configuration
@@ -258,7 +253,7 @@ Resources:
         - AttributeName: "sponsorName"
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
-      TableName: "Visits"
+      TableName: "Scanners"
 
   VisitsTable:
     Type: AWS::DynamoDB::Table
@@ -266,12 +261,12 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "sponsorName"
           AttributeType: "S"
-        - AttributeName: "attendeeEmail"
+        - AttributeName: "visitorEmail"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "sponsorName"
           KeyType: "HASH"
-        - AttributeName: "attendeeEmail"
+        - AttributeName: "visitorEmail"
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "Visits"
@@ -282,7 +277,6 @@ Resources:
 #-----------------------------------------------------
 
 Outputs:
-
   CognitoUserPoolId:
     Value: !Ref UserPool
     Description: "The Cognito User Pool ID (COGNITO_USER_POOL_ID)."
@@ -305,5 +299,3 @@ Outputs:
     Description: "The URL of the deployed front-end application (COGNITO_REDIRECT_SIGNOUT)."
     Value: !Sub "https://${CloudfrontDistribution.DomainName}"
     Condition: DeployCloudFront
-
-
