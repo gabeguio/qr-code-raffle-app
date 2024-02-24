@@ -2,8 +2,6 @@ package com.qrcoderaffleappservice.dynamodb;
 
 import com.qrcoderaffleappservice.dynamodb.models.Playlist;
 import com.qrcoderaffleappservice.exceptions.PlaylistNotFoundException;
-import com.qrcoderaffleappservice.metrics.MetricsConstants;
-import com.qrcoderaffleappservice.metrics.MetricsPublisher;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
@@ -11,39 +9,45 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Accesses data for a playlist using {@link Playlist} to represent the model in DynamoDB.
+ * Accesses data for a scanner using {@link Scanner} to represent the model in DynamoDB.
  */
 @Singleton
-public class PlaylistDao {
+public class ScannerDao {
     private final DynamoDBMapper dynamoDbMapper;
-    private final MetricsPublisher metricsPublisher;
-
     /**
-     * Instantiates a PlaylistDao object.
+     * Instantiates a ScannerDao object.
      *
-     * @param dynamoDbMapper the {@link DynamoDBMapper} used to interact with the playlists table.
-     * @param metricsPublisher the {@link MetricsPublisher} used to record metrics.
+     * @param dynamoDbMapper the {@link DynamoDBMapper} used to interact with the scanners table.
      */
     @Inject
-    public PlaylistDao(DynamoDBMapper dynamoDbMapper, MetricsPublisher metricsPublisher) {
+    public ScannerDao(DynamoDBMapper dynamoDbMapper) {
         this.dynamoDbMapper = dynamoDbMapper;
-        this.metricsPublisher = metricsPublisher;
     }
 
     /**
-     * Returns the {@link Playlist} corresponding to the specified id.
+     * Returns the {@link Scanner} corresponding to the specified email and sponsor.
      *
-     * @param id the Playlist ID.
+     * @param scannerEmail the Scanner Email.
+     * @param sponsorName the Sponsor Name.
      * @return the stored Playlist, or null if none was found.
      */
-    public Playlist getPlaylist(String id) {
-        Playlist playlist = this.dynamoDbMapper.load(Playlist.class, id);
+    public Scanner getScanner(String scannerEmail, String sponsorNAme) {
+        Scanner scanner = this.dynamoDbMapper.load(Scanner.class, scannerEmail, sponsorNAme);
 
-        if (playlist == null) {
-            metricsPublisher.addCount(MetricsConstants.GETPLAYLIST_PLAYLISTNOTFOUND_COUNT, 1);
-            throw new PlaylistNotFoundException("Could not find playlist with id " + id);
+        if (scanner == null) {
+            throw new ScannerNotFoundException("Could not find scanner with email " + scannerEmail " and sponsor name " + sponsorName);
         }
-        metricsPublisher.addCount(MetricsConstants.GETPLAYLIST_PLAYLISTNOTFOUND_COUNT, 0);
-        return playlist;
+        return scanner;
+    }
+
+    /**
+     * Saves (creates or updates) the given scanner.
+     *
+     * @param scanner The scanner to save
+     * @return The Scanner object that was saved
+     */
+    public Scanner saveScanner(Scanner scanner) {
+        this.dynamoDbMapper.save(scanner);
+        return scanner;
     }
 }

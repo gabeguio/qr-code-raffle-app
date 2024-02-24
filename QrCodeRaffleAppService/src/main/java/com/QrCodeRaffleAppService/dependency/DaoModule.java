@@ -1,6 +1,6 @@
 package com.qrcoderaffleappservice.dependency;
 
-import com.nashss.se.aws.dynamodb.DynamoDbClientProvider;
+import com.qrcoderaffleappservice.dynamodb.DynamoDbClientProvider;
 
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
