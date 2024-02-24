@@ -214,12 +214,12 @@ Resources:
   #-----------------------------------------------------
   # Lambda Functions Configuration
   #-----------------------------------------------------
-  GetProjectLambda:
+  CreateScannerLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: service
-      Handler: com.service.lambda.GetProjectLambda::handleRequest
+      Handler: com.service.lambda.CreateScannerLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -231,10 +231,8 @@ Resources:
         service:
           Type: Api
           Properties:
-            Path: /project/{projectId}
-            Method: get
-            Auth:
-              Authorizer: "NONE"
+            Path: /scanners
+            Method: post
 
   #-----------------------------------------------------
   # DynamoDB Configuration
