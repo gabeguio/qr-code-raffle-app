@@ -10,7 +10,7 @@ import Authenticator from "./authenticator";
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
  */
-export default class ProjectClient extends BindingClass {
+export default class RaffleClient extends BindingClass {
   constructor(props = {}) {
     super();
 
