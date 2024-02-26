@@ -21,12 +21,11 @@
   font-weight: 400;
   text-decoration: none;
   letter-spacing: -0.05em;
-  background-color: var(--clr-secondary);
-  color: #f9fafb;
+  background-color: var(--clr-light);
+  color: #fff;
   padding: 0.5em 1em;
   border-radius: 6px;
   transition: transform 0.3s;
-
 }
 
 .container {

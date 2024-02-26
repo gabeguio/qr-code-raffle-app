@@ -3,23 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="text/javascript" src="/assets/index.js"></script>
+    <script type="text/javascript" src="/assets/scanner.js"></script>
     <link rel="icon" href="" type="image/png" />
     <link rel="stylesheet" type="text/css" href="styles/modern-normalize.css" />
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/header.css" />
+    <link rel="stylesheet" type="text/css" href="styles/components/scanner.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/footer.css" />
     <link rel="stylesheet" type="text/css" href="styles/utils.css" />
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-    <title>Create Scanner Page</title>
+    <title>Scanner Page</title>
   </head>
   <body>
     <main>
       <header class="header" id="header"></header>
-      <section class="scanner">
-        <div id="reader"></div>
-        <div id="writer"></div>
+      <section class="controller container">
+        <button class="btn scanner-btn" id="startScanning" color="black">Scan a Vistor</button>
       </section>
+      <section class="scanner" id="scanner"></section>
       <footer class="footer container section">
         <h3 class="footer__title">Qr Code Raffle App 1.0</h3>
         <h3 class="footer__title">

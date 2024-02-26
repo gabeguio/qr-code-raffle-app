@@ -25,6 +25,7 @@ module.exports = {
   },
   entry: {
     index: path.resolve(__dirname, "src", "pages", "index.js"),
+    scanner: path.resolve(__dirname, "src", "pages", "scanner.js"),
   },
   output: {
     path: path.resolve(__dirname, "build", "assets"),

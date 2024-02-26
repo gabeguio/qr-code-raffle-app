@@ -96,6 +96,25 @@ export default class RaffleClient extends BindingClass {
     }
   }
 
+  async createVisit(scannerEmail, visitorFullName, visitorEmail, visitorOrg, errorCallback) {
+    try {
+        const token = await this.getTokenOrThrow("Only authenticated users can create visits");
+        const response = await this.axiosClient.post(`visits`, {
+          scannerEmail: scannerEmail,
+          visitorFullName: visitorFullName,
+          visitorEmail: visitorEmail,
+          visitorOrg: visitorOrg,
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data.visit;
+    } catch (error) {
+        this.handleError(error, errorCallback)
+    }
+}
+
   /**
    * Get the songs on a given playlist by the playlist's identifier.
    * @param id Unique identifier for a playlist

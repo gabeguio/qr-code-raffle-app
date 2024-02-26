@@ -59,7 +59,9 @@ button {
 }
 
 button {
-  border: 1px solid red;
+  border: 1px solid var(--clr-light);
+  padding: 16px;
+  border-radius: 4px;
 }
 
 a {
