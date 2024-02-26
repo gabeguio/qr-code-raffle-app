@@ -1,9 +1,9 @@
 {
-  "name": "project-buddy",
-  "description": "A mobile-first web application for projects.",
+  "name": "qr-code-raffle-app",
+  "description": "A qr code scanner for tech conferences.",
   "version": "1.0.0",
   "license": "UNLICENSED",
-  "main": "js/projects.js",
+  "main": "js/index.js",
   "scripts": {
     "prepublishOnly": "npm run build",
     "build": "webpack --mode=production --devtool=source-map",

@@ -5,51 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="text/javascript" src="/assets/index.js"></script>
     <link rel="icon" href="" type="image/png" />
-    <link rel="stylesheet" type="text/css" href="./styles/modern-normalize.css" />
-    <link rel="stylesheet" type="text/css" href="./styles/style.css" />
-    <link rel="stylesheet" type="text/css" href="./styles/components/header.css" />
-    <link rel="stylesheet" type="text/css" href="./styles/components/mobile-nav.css" />
-    <link rel="stylesheet" type="text/css" href="./styles/components/hero.css" />
-    <link rel="stylesheet" type="text/css" href="./styles/components/footer.css" />
-    <link rel="stylesheet" type="text/css" href="./styles/utils.css" />
-    <link href="https://api.fontshare.com/v2/css?f[]=supreme@800,400,100,300,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="styles/modern-normalize.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link rel="stylesheet" type="text/css" href="styles/components/header.css" />
+    <link rel="stylesheet" type="text/css" href="styles/components/footer.css" />
+    <link rel="stylesheet" type="text/css" href="styles/utils.css" />
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <title>Create Scanner Page</title>
   </head>
   <body>
     <main>
-      <header class="header container" id="header"></header>
-      <section>
-        <!-- Mobile Navigation -->
-        <div class="mobile-nav">
-          <nav>
-            <ul class="mobile-nav__menu">
-              <li>
-                <a class="mobile-nav__link" href="index.html">Home</a>
-              </li>
-              <li class="mobile-nav__link-line"></li>
-            </ul>
-          </nav>
-        </div>
-        <!-- End of Mobile Navigation -->
-      </section>
-
-      <section class="scanner-create">
-        <form class="create-form">
-          <h2>Create Scanner</h2>
-          <div class="form-group">
-            <label for="scanner-email">Scanner Email:</label>
-            <input type="text" id="scanner-email" name="scanner-email" required />
-          </div>
-          <div class="form-group">
-            <label for="sponsor-name">Sponsor Name:</label>
-            <select id="sponsor-name" name="sponsor-name">
-              <option value="CGI">CGI</option>
-              <option value="Sigma">Sigma</option>
-              <option value="Lovelytics">Lovelytics</option>
-            </select>
-          </div>
-          <button type="submit" onclick="logFormValues()">Create</button>
-        </form>
+      <header class="header" id="header"></header>
+      <section class="scanner">
+        <div id="reader"></div>
+        <div id="writer"></div>
       </section>
       <footer class="footer container section">
         <h3 class="footer__title">Qr Code Raffle App 1.0</h3>
@@ -60,25 +29,43 @@
       </footer>
     </main>
     <script>
-      function logFormValues() {
-        const scannerEmail = document.getElementById('scanner-email').value;
-        const sponsorName = document.getElementById('sponsor-name').value;
-        console.log('Scanner Email:', scannerEmail);
-        console.log('Sponsor Name:', sponsorName);
+      function onScanFailure(error) {
+        // handle scan failure, usually better to ignore and keep scannin);g.
+        // for example:
+        console.warn(`Code scan error = ${error}`);
       }
+
+      let html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: { width: 200, height: 200 } }, /* verbose= */ false);
+      html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+      function onScanSuccess(decodedText, decodedResult) {
+        // Handle on success condition with the decoded text or result.
+        console.log(`Scan result: ${decodedText}`, decodedResult);
+        // log results to div id called writer
+        document.getElementById("writer").innerHTML = decodedText;
+        // ...
+        html5QrcodeScanner.clear();
+        // ^ this will stop the scanner (video feed) and clear the scan area.
+      }
+
+      html5QrcodeScanner.render(onScanSuccess);
     </script>
   </body>
 </html>
-          <button type="submit">Create</button>
-        </form>
-      </section>
-      <footer class="footer container section">
-        <h3 class="footer__title">Qr Code Raffle App 1.0</h3>
-        <h3 class="footer__title">
-          By
-          <a href="https://www.linkedin.com/in/gabe-guio/">Gabe Guio</a>
-        </h3>
-      </footer>
-    </main>
-  </body>
-</html>
+
+<!-- <form class="create-form">
+  <h2>Create Scanner</h2>
+  <div class="form-group">
+    <label for="scanner-email">Scanner Email:</label>
+    <input type="text" id="scanner-email" name="scanner-email" required />
+  </div>
+  <div class="form-group">
+    <label for="sponsor-name">Sponsor Name:</label>
+    <select id="sponsor-name" name="sponsor-name">
+      <option value="CGI">CGI</option>
+      <option value="Sigma">Sigma</option>
+      <option value="Lovelytics">Lovelytics</option>
+    </select>
+  </div>
+  <button type="submit" onclick="logFormValues()">Create</button>
+</form> -->

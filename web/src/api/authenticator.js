@@ -1,4 +1,4 @@
-import BindingClass from "../util/BindingClass";
+import BindingClass from "../util/bindingClass";
 import { Auth } from "aws-amplify";
 
 export default class Authenticator extends BindingClass {

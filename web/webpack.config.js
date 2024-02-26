@@ -3,9 +3,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 // Get the name of the appropriate environment variable (`.env`) file for this build/run of the app
-const dotenvFile = process.env.API_LOCATION
-  ? `.env.${process.env.API_LOCATION}`
-  : ".env";
+const dotenvFile = process.env.API_LOCATION ? `.env.${process.env.API_LOCATION}` : ".env";
 
 module.exports = {
   plugins: [
@@ -40,23 +38,7 @@ module.exports = {
     port: 8000,
     client: {
       // overlay shows a full-screen overlay in the browser when there are js compiler errors or warnings
-      overlay: true,
+      overlay: false,
     },
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'images/', // Output path for images after bundling
-            },
-          },
-        ],
-      },
-    ],
   },
 };

@@ -1,14 +1,9 @@
 :root {
-  --clr-dark: #0b0c0f;
-  --clr-light: #f9fafb;
-  --clr-gray400: #9ca3af;
-  --clr-gray600: #4b5563;
-  --clr-gray800: #1f2937;
-  --clr-primary: #4f46e5;
-  --clr-secondary: #e11d48;
-
-  /* primary - indigo rgb(37, 99, 235) */
-  /* secondary - rose rgb(225, 29, 72) */
+  --clr-dark: #f9fafb;
+  --clr-light: #0b0c0f;
+  --clr-gray400: #0b0c0f;
+  --clr-gray600: #0b0c0f;
+  --clr-gray800: #0b0c0f;
 
   /* sizes */
   --size-xxs: 0.5rem; /* 8 */
@@ -37,14 +32,6 @@ html {
   scroll-behavior: smooth;
 }
 
-.light-mode {
-  --clr-light: #0b0c0f;
-  --clr-dark: #f9fafb;
-  --clr-gray400: #1f2937;
-  --clr-gray600: #1f2937;
-  --clr-gray800: #1f2937;
-}
-
 body {
   font-family: "Supreme", sans-serif;
   background-color: var(--clr-dark);
@@ -69,6 +56,10 @@ button {
   cursor: pointer;
   color: inherit;
   -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  border: 1px solid red;
 }
 
 a {

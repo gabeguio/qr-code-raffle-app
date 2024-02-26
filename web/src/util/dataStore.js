@@ -1,4 +1,4 @@
-import BindingClass from "./BindingClass";
+import BindingClass from "./bindingClass";
 
 /**
  * Stores all of the data across the state. When the state changes in any way, execute all of the listeners registered
@@ -7,10 +7,7 @@ import BindingClass from "./BindingClass";
 export default class DataStore extends BindingClass {
   constructor(initialState = {}) {
     super();
-    this.bindClassMethods(
-      ["getState", "get", "setState", "set", "addChangeListener"],
-      this
-    );
+    this.bindClassMethods(["getState", "get", "setState", "set", "addChangeListener"], this);
     this.state = initialState;
     this.listeners = [];
   }
