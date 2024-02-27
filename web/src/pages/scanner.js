@@ -1,4 +1,4 @@
-import Client from "../api/client";
+import RaffleClient from "../api/raffleClient.js";
 import Header from "../components/Header";
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/dataStore";
@@ -18,11 +18,16 @@ class Scanner extends BindingClass {
   /**
    * Add the header to the page and load the Client.
    */
-  mount() {
-    document.getElementById("startScanning").addEventListener("click", this.loadScanner);
+  async mount() {
+    // document.getElementById("startScanning").addEventListener("click", this.loadScanner);
 
     this.header.addHeaderToPage();
-    this.client = new Client();
+    this.client = new RaffleClient();
+    const visit = await this.client.createVisit("Starbucks", "gabeguio@gmail.com", "Gabe Guio", "Company", (error) => {
+      console.log(error.message);
+    });
+    console.log(visit);
+    // this.loadScanner();
   }
 
   /**
@@ -65,11 +70,11 @@ class Scanner extends BindingClass {
 
   loadScanner(scannerEmail) {
     // create a div with id reader and add to the scanner section
-    const reader = document.createElement("div");
-    reader.id = "reader";
-    document.getElementById("scanner").appendChild(reader);
-    const writer = document.getElementById("writer");
-    writer.innerHTML = "";
+    // const reader = document.createElement("div");
+    // reader.id = "reader";
+    // document.getElementById("scanner").appendChild(reader);
+    // const writer = document.getElementById("writer");
+    // writer.innerHTML = "";
 
     function parseVCard(decodedText) {
       const lines = decodedText.split("\n");
@@ -89,17 +94,19 @@ class Scanner extends BindingClass {
 
     async function onScanSuccess(decodedText, decodedResult) {
       const vCardObject = parseVCard(decodedText);
-      const {fn, email, org} = vCardObject;
+      console.log(vCardObject);
+      const sponsorName = "DataTuneConf";
 
-      const sponsorName = "DataTuneConf"; 
+      console.log(sponsorName, vCardObject.email, vCardObject.fn, vCardObject.org);
 
-      const errorMessageDisplay = document.getElementById("error-message");
-      errorMessageDisplay.innerText = ``;
-      errorMessageDisplay.classList.add("hidden");
-      const visit = await this.client.createVisit(sponsorName, fn, email, org, (error) => {
-        createButton.innerText = origButtonText;
-        errorMessageDisplay.innerText = `Error: ${error.message}`;
-        errorMessageDisplay.classList.remove("hidden");
+      // const errorMessageDisplay = document.getElementById("error-message");
+      // errorMessageDisplay.innerText = ``;
+      // errorMessageDisplay.classList.add("hidden");
+      const visit = await this.client.createVisit(sponsorName, vCardObject.email, vCardObject.fn, vCardObject.org, (error) => {
+        console.log(error.message);
+        // createButton.innerText = origButtonText;
+        // errorMessageDisplay.innerText = `Error: ${error.message}`;
+        // errorMessageDisplay.classList.remove("hidden");
       });
 
       console.log(visit);
@@ -114,6 +121,10 @@ class Scanner extends BindingClass {
 
     html5QrcodeScanner.render(onScanSuccess);
   }
+}
+
+async function createVisit(vCardObject, sponsorName) {
+  return visit;
 }
 
 /**

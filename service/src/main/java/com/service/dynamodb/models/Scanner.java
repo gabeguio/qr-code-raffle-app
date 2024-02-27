@@ -7,7 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 /**
  * Represents a record in the scanners table.
  */
-@DynamoDBTable(tableName = "scanners")
+@DynamoDBTable(tableName = "Scanners")
 public class Scanner {
     private String scannerEmail;
     private String sponsorName;

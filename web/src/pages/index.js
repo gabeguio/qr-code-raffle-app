@@ -1,4 +1,4 @@
-import Client from "../api/client";
+import RaffleClient from "../api/raffleClient";
 import Header from "../components/Header";
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/dataStore";
@@ -23,7 +23,7 @@ class Index extends BindingClass {
 
     this.header.addHeaderToPage();
 
-    this.client = new Client();
+    this.client = new RaffleClient();
   }
 
   /**

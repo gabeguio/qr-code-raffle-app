@@ -8,7 +8,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 /**
  * Represents a record in the visits table.
  */
-@DynamoDBTable(tableName = "visits")
+@DynamoDBTable(tableName = "Visits")
 public class Visit {
     private String sponsorName;
     private String visitorEmail;

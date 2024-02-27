@@ -3,7 +3,7 @@ import BindingClass from "../util/bindingClass";
 import Authenticator from "./authenticator";
 
 /**
- * Client to call the MusicPlaylistService.
+ * Client to call the QrCodeRaffleAppService.
  *
  * This could be a great place to explore Mixins. Currently the client is being loaded multiple times on each page,
  * which we could avoid using inheritance or Mixins.
@@ -14,7 +14,7 @@ export default class RaffleClient extends BindingClass {
   constructor(props = {}) {
     super();
 
-    const methodsToBind = ["clientLoaded", "getIdentity", "login", "logout", "createScanner", "getPlaylistSongs", "createPlaylist"];
+    const methodsToBind = ["clientLoaded", "getIdentity", "login", "logout", "createScanner", "createVisit", "getPlaylistSongs", "createPlaylist", "handleError"];
     this.bindClassMethods(methodsToBind, this);
 
     this.authenticator = new Authenticator();
@@ -96,24 +96,32 @@ export default class RaffleClient extends BindingClass {
     }
   }
 
-  async createVisit(scannerEmail, visitorFullName, visitorEmail, visitorOrg, errorCallback) {
+  async createVisit(sponsorName, visitorEmail, visitorFullName, visitorOrganization, errorCallback) {
     try {
-        const token = await this.getTokenOrThrow("Only authenticated users can create visits");
-        const response = await this.axiosClient.post(`visits`, {
-          scannerEmail: scannerEmail,
-          visitorFullName: visitorFullName,
+      console.log("hello");
+      const token = await this.getTokenOrThrow("Only authenticated users can create visits");
+      console.log(token);
+      const response = await this.axiosClient.post(
+        `visits`,
+        {
+          sponsorName: sponsorName,
           visitorEmail: visitorEmail,
-          visitorOrg: visitorOrg,
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        return response.data.visit;
+          visitorFullName: visitorFullName,
+          visitorOrganization: visitorOrganization,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      return response.data.visit;
     } catch (error) {
-        this.handleError(error, errorCallback)
+      console.log("error");
+      this.handleError(error, errorCallback);
     }
-}
+  }
 
   /**
    * Get the songs on a given playlist by the playlist's identifier.
@@ -158,52 +166,52 @@ export default class RaffleClient extends BindingClass {
     }
   }
 
-  /**
-   * Add a song to a playlist.
-   * @param id The id of the playlist to add a song to.
-   * @param asin The asin that uniquely identifies the album.
-   * @param trackNumber The track number of the song on the album.
-   * @returns The list of songs on a playlist.
-   */
-  async addSongToPlaylist(id, asin, trackNumber, errorCallback) {
-    try {
-      const token = await this.getTokenOrThrow("Only authenticated users can add a song to a playlist.");
-      const response = await this.axiosClient.post(
-        `playlists/${id}/songs`,
-        {
-          id: id,
-          asin: asin,
-          trackNumber: trackNumber,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return response.data.songList;
-    } catch (error) {
-      this.handleError(error, errorCallback);
-    }
-  }
+  // /**
+  //  * Add a song to a playlist.
+  //  * @param id The id of the playlist to add a song to.
+  //  * @param asin The asin that uniquely identifies the album.
+  //  * @param trackNumber The track number of the song on the album.
+  //  * @returns The list of songs on a playlist.
+  //  */
+  // async addSongToPlaylist(id, asin, trackNumber, errorCallback) {
+  //   try {
+  //     const token = await this.getTokenOrThrow("Only authenticated users can add a song to a playlist.");
+  //     const response = await this.axiosClient.post(
+  //       `playlists/${id}/songs`,
+  //       {
+  //         id: id,
+  //         asin: asin,
+  //         trackNumber: trackNumber,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     return response.data.songList;
+  //   } catch (error) {
+  //     this.handleError(error, errorCallback);
+  //   }
+  // }
 
-  /**
-   * Search for a soong.
-   * @param criteria A string containing search criteria to pass to the API.
-   * @returns The playlists that match the search criteria.
-   */
-  async search(criteria, errorCallback) {
-    try {
-      const queryParams = new URLSearchParams({ q: criteria });
-      const queryString = queryParams.toString();
+  // /**
+  //  * Search for a soong.
+  //  * @param criteria A string containing search criteria to pass to the API.
+  //  * @returns The playlists that match the search criteria.
+  //  */
+  // async search(criteria, errorCallback) {
+  //   try {
+  //     const queryParams = new URLSearchParams({ q: criteria });
+  //     const queryString = queryParams.toString();
 
-      const response = await this.axiosClient.get(`playlists/search?${queryString}`);
+  //     const response = await this.axiosClient.get(`playlists/search?${queryString}`);
 
-      return response.data.playlists;
-    } catch (error) {
-      this.handleError(error, errorCallback);
-    }
-  }
+  //     return response.data.playlists;
+  //   } catch (error) {
+  //     this.handleError(error, errorCallback);
+  //   }
+  // }
 
   /**
    * Helper method to log the error and run any error functions.

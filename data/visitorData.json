@@ -1,0 +1,22 @@
+{
+  "Visits": [
+    {
+      "PutRequest": {
+        "Item": {
+          "sponsorName": {
+            "S": "Senate"
+          },
+          "visitorEmail": {
+            "S": "sithlord@email.com"
+          },
+          "visitorFullName": {
+            "S": "Darth Vader"
+          },
+          "visitorOrganization": {
+            "S": "Empire"
+          }
+        }
+      }
+    }
+  ]
+}

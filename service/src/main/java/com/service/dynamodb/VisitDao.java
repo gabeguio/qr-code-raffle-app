@@ -44,10 +44,8 @@ public class VisitDao {
      * Saves (creates or updates) the given scanner.
      *
      * @param visit The scanner to save
-     * @return The visit object that was saved
      */
-    public Visit saveVisit(Visit visit) {
+    public void saveVisit(Visit visit) {
         this.dynamoDbMapper.save(visit);
-        return visit;
     }
 }

@@ -1,4 +1,4 @@
-import MusicPlaylistClient from "../api/client";
+import RaffleClient from "../api/raffleClient";
 import BindingClass from "../util/bindingClass";
 
 /**
@@ -11,7 +11,7 @@ export default class Header extends BindingClass {
     const methodsToBind = ["addHeaderToPage", "createSiteTitle", "createUserInfoForHeader", "createLoginButton", "createLoginButton", "createLogoutButton"];
     this.bindClassMethods(methodsToBind, this);
 
-    this.client = new MusicPlaylistClient();
+    this.client = new RaffleClient();
   }
 
   /**
