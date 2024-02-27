@@ -12,11 +12,11 @@ The app is meant for sponsors at a tech conference to scan QR codes and keep tra
 
 ### Backend
 
-- Java, AWS Lambda, DyanmoDB
+- Java, AWS Lambda, DynamoDb
 
-## Dependencies
+## Notable Dependencies
 
-- The conference uses [Tito Event Management](https://ti.to/developers) to provide QR codes for every attendee. These QR codes will be printed on the attendee's badges to carry around the conference and scan at each booth. The QR codes have embedded information for a attendee's contact information.
+- The conference uses [Tito Event Management](https://ti.to/developers) to provide QR codes for every attendee. These QR codes will be printed on the attendee's badges to carry around the conference and scan at each booth. The QR codes have embedded information for an attendee's contact information.
 - On the front end, the plan is to use an [embedded QR scanner](https://www.webqr.com/index.html) for the sponsors to pull up on their phones to scan attendees.
 
 ## User Flow Diagram
@@ -32,10 +32,10 @@ _Image 1: Programming flow for user signup/registration and scanning visitors QR
 
 2. Use Case 3, **Update Scanner**: Update the single sponsor for a scanner profile.
 
-3. Use Case 4, **Add a visit to the sponsor booth**: A scanner scans an attendees QR code, the attendee has now visited that sponsor’s booth.
+3. Use Case 4, **Add a Visit to the Sponsor Booth**: A scanner scans an attendee's QR code, and the attendee has now visited that sponsor’s booth.
 
-4. Use Case 5, **Get all visited Attendees by sponsorId**: A sponsor would like to view every attendee who has visited their booth.
+4. Use Case 5, **Get all Visited Attendees by Sponsor**: A sponsor would like to view every attendee who has visited their booth.
 
-5. Use Case 6, **Get a random attendee by sponsorId**: A sponsor can roll a random attendee that has visited their booth to win the sponsor raffle.
+5. Use Case 6, **Get a Random Attendee by Sponsor**: A sponsor can roll a random attendee who has visited their booth to win the sponsor raffle.
 
-6. Use Case 7, **Get a random Attendee that visited every Sponsor**: The Organizer would roll from a query of all random attendees who have visited every booth at the conference to win the grand prize raffle.
+6. Use Case 7, **Get a Random Attendee that Visited Every Sponsor**: The Organizer would roll from a query of all random attendees who have visited every booth at the conference to win the grand prize raffle.
