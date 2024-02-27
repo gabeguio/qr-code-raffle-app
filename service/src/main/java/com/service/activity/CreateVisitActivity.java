@@ -2,6 +2,7 @@ package com.service.activity;
 
 import com.service.activity.requests.CreateVisitRequest;
 import com.service.activity.results.CreateVisitResult;
+
 import com.service.converters.ModelConverter;
 import com.service.dynamodb.VisitDao;
 import com.service.dynamodb.models.Visit;
@@ -24,11 +25,11 @@ public class CreateVisitActivity {
     /**
      * Instantiates a new CreateVisitActivity object.
      *
-     * @param VisitDao VisitDao to access the visits table.
+     * @param visitDao VisitDao to access the visits table.
      */
     @Inject
-    public CreateVisitActivity(VisitDao VisitDao) {
-        this.visitDao = VisitDao;
+    public CreateVisitActivity(VisitDao visitDao) {
+        this.visitDao = visitDao;
     }
 
     /**

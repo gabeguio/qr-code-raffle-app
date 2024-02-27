@@ -62,7 +62,10 @@ public class VisitModel {
             return false;
         }
         VisitModel that = (VisitModel) o;
-        return Objects.equals(sponsorName, that.sponsorName) && Objects.equals(visitorEmail, that.visitorEmail) && Objects.equals(visitorFullName, that.visitorFullName) && Objects.equals(visitorOrganization, that.visitorOrganization);
+        return Objects.equals(sponsorName, that.sponsorName) &&
+                Objects.equals(visitorEmail, that.visitorEmail) &&
+                Objects.equals(visitorFullName, that.visitorFullName) &&
+                Objects.equals(visitorOrganization, that.visitorOrganization);
     }
 
     @Override

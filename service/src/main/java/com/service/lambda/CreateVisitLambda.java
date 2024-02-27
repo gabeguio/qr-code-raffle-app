@@ -11,19 +11,19 @@ public class CreateVisitLambda
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<CreateVisitRequest> input, Context context) {
         return super.runActivity(
-                () -> {
-                    CreateVisitRequest unauthenticatedRequest = input.fromBody(CreateVisitRequest.class);
-                    return input.fromUserClaims(claims ->
-                            CreateVisitRequest.builder()
-                                    .withSponsorName(unauthenticatedRequest.getSponsorName())
-                                    .withVisitorEmail(unauthenticatedRequest.getVisitorEmail())
-                                    .withVisitorFullName(unauthenticatedRequest.getVisitorFullName())
-                                    .withVisitorOrganization(unauthenticatedRequest.getVisitorOrganization())
-                                    .build());
-                },
-                (request, serviceComponent) ->
-                        serviceComponent.provideCreateVisitActivity().handleRequest(request)
-        );
+            () -> {
+                CreateVisitRequest unauthenticatedRequest = input.fromBody(CreateVisitRequest.class);
+                return input.fromUserClaims(claims ->
+                    CreateVisitRequest.builder()
+                            .withSponsorName(unauthenticatedRequest.getSponsorName())
+                            .withVisitorEmail(unauthenticatedRequest.getVisitorEmail())
+                            .withVisitorFullName(unauthenticatedRequest.getVisitorFullName())
+                            .withVisitorOrganization(unauthenticatedRequest.getVisitorOrganization())
+                            .build());
+            },
+            (request, serviceComponent) ->
+                    serviceComponent.provideCreateVisitActivity().handleRequest(request)
+    );
     }
 }
 

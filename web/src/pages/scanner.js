@@ -89,14 +89,22 @@ class Scanner extends BindingClass {
 
     async function onScanSuccess(decodedText, decodedResult) {
       const vCardObject = parseVCard(decodedText);
-      console.log(vCardObject);
-      document.getElementById("writer").innerHTML = `<p>${vCardObject.fn} from ${vCardObject.org} has been checked in!</p>`;
+      const {fn, email, org} = vCardObject;
 
-      // const visit = await this.client.createVisit(sponsorName, fn, email, org, (error) => {
-      //   createButton.innerText = origButtonText;
-      //   errorMessageDisplay.innerText = `Error: ${error.message}`;
-      //   errorMessageDisplay.classList.remove("hidden");
-      // });
+      const sponsorName = "DataTuneConf"; 
+
+      const errorMessageDisplay = document.getElementById("error-message");
+      errorMessageDisplay.innerText = ``;
+      errorMessageDisplay.classList.add("hidden");
+      const visit = await this.client.createVisit(sponsorName, fn, email, org, (error) => {
+        createButton.innerText = origButtonText;
+        errorMessageDisplay.innerText = `Error: ${error.message}`;
+        errorMessageDisplay.classList.remove("hidden");
+      });
+
+      console.log(visit);
+
+      document.getElementById("writer").innerHTML = `<p>${visit.visitorFullName} from ${visit.visitorOrganization} has been checked in!</p>`;
       // ...
       // this will stop the scanner (video feed) and clear the scan area.
       html5QrcodeScanner.clear();

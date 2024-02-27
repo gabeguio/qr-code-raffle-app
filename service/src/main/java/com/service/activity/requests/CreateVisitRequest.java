@@ -9,7 +9,16 @@ public class CreateVisitRequest {
     private final String visitorFullName;
     private final String visitorOrganization;
 
-    public CreateVisitRequest(String sponsorName, String visitorEmail, String visitorFullName, String visitorOrganization) {
+    /**
+     * Instantiates a new CreateVisitRequest object for the CreateVisitActivity.
+     * @param sponsorName sponsor name that is being visited.
+     * @param visitorEmail visitor email.
+     * @param visitorFullName visitor first and last name.
+     * @param visitorOrganization visitor organization signed up for the conference.
+     */
+
+    public CreateVisitRequest(String sponsorName, String visitorEmail,
+                              String visitorFullName, String visitorOrganization) {
         this.sponsorName = sponsorName;
         this.visitorEmail = visitorEmail;
         this.visitorFullName = visitorFullName;

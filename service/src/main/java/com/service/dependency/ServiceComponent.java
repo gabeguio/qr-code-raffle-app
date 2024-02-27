@@ -17,6 +17,9 @@ public interface ServiceComponent {
      * @return GetPlaylistActivity
      */
     CreateScannerActivity provideCreateScannerActivity();
-
+    /**
+     * Provides the relevant activity.
+     * @return CreateVisitActivity
+     */
     CreateVisitActivity provideCreateVisitActivity();
 }
