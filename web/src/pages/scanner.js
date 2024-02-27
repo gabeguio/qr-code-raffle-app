@@ -67,10 +67,9 @@ class Scanner extends BindingClass {
     // create a div with id reader and add to the scanner section
     const reader = document.createElement("div");
     reader.id = "reader";
-    const writer = document.createElement("div");
-    writer.id = "writer";
     document.getElementById("scanner").appendChild(reader);
-    document.getElementById("scanner").appendChild(writer);
+    const writer = document.getElementById("writer");
+    writer.innerHTML = "";
 
     function parseVCard(decodedText) {
       const lines = decodedText.split("\n");
@@ -89,11 +88,6 @@ class Scanner extends BindingClass {
     }
 
     async function onScanSuccess(decodedText, decodedResult) {
-      // Handle on success condition with the decoded text or result.
-      // console.log(`Scan result: ${decodedText}`, decodedResult);
-
-      // log results to div id called writer
-
       const vCardObject = parseVCard(decodedText);
       console.log(vCardObject);
       document.getElementById("writer").innerHTML = `<p>${vCardObject.fn} from ${vCardObject.org} has been checked in!</p>`;
@@ -104,8 +98,8 @@ class Scanner extends BindingClass {
       //   errorMessageDisplay.classList.remove("hidden");
       // });
       // ...
+      // this will stop the scanner (video feed) and clear the scan area.
       html5QrcodeScanner.clear();
-      // ^ this will stop the scanner (video feed) and clear the scan area.
     }
 
     let html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: { width: 200, height: 200 } }, /* verbose= */ false);

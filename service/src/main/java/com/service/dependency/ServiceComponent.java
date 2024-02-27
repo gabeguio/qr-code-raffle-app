@@ -1,7 +1,7 @@
 package com.service.dependency;
 
 import com.service.activity.CreateScannerActivity;
-
+import com.service.activity.CreateVisitActivity;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -18,4 +18,5 @@ public interface ServiceComponent {
      */
     CreateScannerActivity provideCreateScannerActivity();
 
+    CreateVisitActivity provideCreateVisitActivity();
 }
