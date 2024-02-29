@@ -28,15 +28,14 @@ public class ScannerDao {
      * Returns the {@link Scanner} corresponding to the specified email and sponsor.
      *
      * @param scannerEmail the Scanner Email.
-     * @param sponsorName the Sponsor Name.
-     * @return the stored Playlist, or null if none was found.
+     * @return the stored Scanner, or null if none was found.
      */
-    public Scanner getScanner(String scannerEmail, String sponsorName) {
-        Scanner scanner = this.dynamoDbMapper.load(Scanner.class, scannerEmail, sponsorName);
+    public Scanner getScanner(String scannerEmail) {
+        Scanner scanner = this.dynamoDbMapper.load(Scanner.class, scannerEmail);
 
         if (scanner == null) {
-            throw new ScannerNotFoundException("Could not find scanner with email " + scannerEmail +
-                    " and sponsor name " + sponsorName);
+            throw new ScannerNotFoundException("Could not find scanner for the current user email " +
+                    scannerEmail + ".");
         }
         return scanner;
     }

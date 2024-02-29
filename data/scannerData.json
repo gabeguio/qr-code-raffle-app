@@ -1,0 +1,16 @@
+{
+  "Scanners": [
+    {
+      "PutRequest": {
+        "Item": {
+          "scannerEmail": {
+            "S": "test@email.com"
+          },
+          "sponsorName": {
+            "S": "testName"
+          }
+        }
+      }
+    }
+  ]
+}

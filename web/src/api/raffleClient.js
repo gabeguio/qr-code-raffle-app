@@ -70,6 +70,21 @@ export default class RaffleClient extends BindingClass {
     return await this.authenticator.getUserToken();
   }
 
+    /**
+   * Get the songs on a given playlist by the playlist's identifier.
+   * @param id Unique identifier for a playlist
+   * @param errorCallback (Optional) A function to execute if the call fails.
+   * @returns The list of songs on a playlist.
+   */
+    async getScanner(email, errorCallback) {
+      try {
+        const response = await this.axiosClient.get(`scanners`);
+        return response.data.songList;
+      } catch (error) {
+        this.handleError(error, errorCallback);
+      }
+    }
+
   /**
    * Create the scanner for the given email and sponsor.
    * @param sponsorName Unique identifier for a sponsor

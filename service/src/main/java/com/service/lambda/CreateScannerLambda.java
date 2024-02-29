@@ -17,8 +17,8 @@ public class CreateScannerLambda
                 CreateScannerRequest unauthenticatedRequest = input.fromBody(CreateScannerRequest.class);
                 return input.fromUserClaims(claims ->
                     CreateScannerRequest.builder()
-                            .withSponsorName(unauthenticatedRequest.getSponsorName())
                             .withScannerEmail(claims.get("email"))
+                            .withSponsorName(unauthenticatedRequest.getSponsorName())
                             .build());
             },
             (request, serviceComponent) ->

@@ -46,7 +46,6 @@ public class CreateScannerActivityTest {
         verify(ScannerDao).saveScanner(any(Scanner.class));
 
         assertNotNull(result.getScanner().getScannerEmail());
-        assertNotNull(result.getScanner().getSponsorName());
         assertEquals(expectedScannerEmail, result.getScanner().getScannerEmail());
         assertEquals(expectedSponsorName, result.getScanner().getSponsorName());
     }

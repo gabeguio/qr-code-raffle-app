@@ -9,9 +9,8 @@ import DataStore from "../util/dataStore";
 class Index extends BindingClass {
   constructor() {
     super();
-    this.bindClassMethods(["mount"], this);
+    this.bindClassMethods(["mount", "checkSignIn", "createLoginButton", "createButton"], this);
     this.dataStore = new DataStore();
-    this.dataStore.addChangeListener(this.redirectToViewPlaylist);
     this.header = new Header(this.dataStore);
   }
 
@@ -19,50 +18,48 @@ class Index extends BindingClass {
    * Add the header to the page and load the MusicPlaylistClient.
    */
   mount() {
-    // document.getElementById("create").addEventListener("click", this.submit);
-
     this.header.addHeaderToPage();
-
     this.client = new RaffleClient();
+    this.checkSignIn();
   }
 
-  /**
-   * Method to run when the create playlist submit button is pressed. Call the MusicPlaylistService to create the
-   * playlist.
-   */
-  // async submit(evt) {
-  //   evt.preventDefault();
-  //   const errorMessageDisplay = document.getElementById("error-message");
-  //   errorMessageDisplay.innerText = ``;
-  //   errorMessageDisplay.classList.add("hidden");
-  //   const createButton = document.getElementById("create");
-  //   const origButtonText = createButton.innerText;
-  //   createButton.innerText = "Loading...";
-  //   const playlistName = document.getElementById("playlist-name").value;
-  //   const tagsText = document.getElementById("tags").value;
-  //   let tags;
-  //   if (tagsText.length < 1) {
-  //     tags = null;
-  //   } else {
-  //     tags = tagsText.split(/\s*,\s*/);
-  //   }
-  //   const playlist = await this.client.createPlaylist(playlistName, tags, (error) => {
-  //     createButton.innerText = origButtonText;
-  //     errorMessageDisplay.innerText = `Error: ${error.message}`;
-  //     errorMessageDisplay.classList.remove("hidden");
-  //   });
-  //   this.dataStore.set("playlist", playlist);
-  // }
+  async checkSignIn() {
+    const currentUser = await this.client.getIdentity();
 
-  /**
-   * When the playlist is updated in the datastore, redirect to the view playlist page.
-   */
-  // redirectToViewPlaylist() {
-  //   const playlist = this.dataStore.get("playlist");
-  //   if (playlist != null) {
-  //     window.location.href = `/playlist.html?id=${playlist.id}`;
-  //   }
-  // }
+    console.log(currentUser);
+
+    if (currentUser == null) {
+      //grab div by id "sign-in__message"
+      const signInMessage = document.getElementById("sign-in__message");
+      //create a paragraph element
+      const paragraphElement = document.createElement("p");
+      const loginButton = this.createLoginButton();
+      //add the paragraph element to the sign in message div
+      paragraphElement.innerHTML = "Please sign in to register a scanner profile.";
+      signInMessage.appendChild(paragraphElement);
+      signInMessage.appendChild(loginButton);
+    } else {
+      this.dataStore.set("userEmail", currentUser.email);
+      window.location.href = "/registerScanner.html";
+    }
+  }
+
+  createLoginButton() {
+    return this.createButton("Login", this.client.login);
+  }
+
+  createButton(text, clickHandler) {
+    const button = document.createElement("a");
+    button.classList.add("button");
+    button.href = "#";
+    button.innerText = text;
+
+    button.addEventListener("click", async () => {
+      await clickHandler();
+    });
+
+    return button;
+  }
 }
 
 /**
