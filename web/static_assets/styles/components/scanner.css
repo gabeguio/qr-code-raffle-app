@@ -4,3 +4,36 @@
   margin-left: auto;
   margin-bottom: 2rem;
 }
+
+.reader {
+  background-color: var(--clr-light);
+  color: black;
+}
+
+#reader_dashboard {
+  color: var(--clr-dark);
+}
+
+.scanner-writer {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  padding: var(--size-2xl);
+  margin-bottom: 2rem;
+  transform: uppercase;
+  letter-spacing: 0.2em;
+  text-align: center;
+}
+
+.sign-in__message {
+  font-size: var(--size-base);
+  text-align: center;
+}
+
+.sign-in__button {
+  display: block;
+  font-size: var(--size-base);
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+}

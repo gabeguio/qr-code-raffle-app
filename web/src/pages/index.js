@@ -4,18 +4,18 @@ import BindingClass from "../util/bindingClass";
 import DataStore from "../util/dataStore";
 
 /**
- * Logic needed for the create playlist page of the website.
+ * Logic needed for the user entry point of the website.
  */
 class Index extends BindingClass {
   constructor() {
     super();
-    this.bindClassMethods(["mount", "checkSignIn", "createLoginButton", "createButton"], this);
+    this.bindClassMethods(["mount", "checkSignIn", "displaySignInMessage", "createLoginButton", "createButton"], this);
     this.dataStore = new DataStore();
     this.header = new Header(this.dataStore);
   }
 
   /**
-   * Add the header to the page and load the MusicPlaylistClient.
+   * Add the header, load the service client, and check the user sign-in status.
    */
   mount() {
     this.header.addHeaderToPage();
@@ -24,23 +24,36 @@ class Index extends BindingClass {
   }
 
   async checkSignIn() {
-    const currentUser = await this.client.getIdentity();
+    const errorMessageDisplay = document.getElementById("error-message");
+    errorMessageDisplay.innerText = ``;
+    errorMessageDisplay.classList.add("hidden");
 
-    console.log(currentUser);
+    try {
+      const currentUser = await this.client.getIdentity();
 
-    if (currentUser == null) {
-      //grab div by id "sign-in__message"
-      const signInMessage = document.getElementById("sign-in__message");
-      //create a paragraph element
-      const paragraphElement = document.createElement("p");
-      const loginButton = this.createLoginButton();
-      //add the paragraph element to the sign in message div
-      paragraphElement.innerHTML = "Please sign in to register a scanner profile.";
-      signInMessage.appendChild(paragraphElement);
-      signInMessage.appendChild(loginButton);
-    } else {
-      window.location.href = "/registerScanner.html";
+      if (currentUser == null) {
+        this.displaySignInMessage();
+      } else {
+        window.location.href = "/registerScanner.html";
+      }
+    } catch (error) {
+      console.error("Error checking sign-in status:", error.message);
+      errorMessageDisplay.innerText = `Error: ${error.message}`;
+      errorMessageDisplay.classList.remove("hidden");
     }
+  }
+
+  displaySignInMessage() {
+    const signInMessage = document.getElementById("sign-in__message");
+    const paragraphElement = document.createElement("p");
+    // add class "sign-in__message" to the paragraph element
+    paragraphElement.classList.add("sign-in__message");
+    paragraphElement.innerHTML = "Please sign in to register a scanner profile.";
+    const loginButton = this.createLoginButton();
+    // add a login button to the sign-in message
+    loginButton.classList.add("sign-in__button");
+    signInMessage.appendChild(paragraphElement);
+    signInMessage.appendChild(loginButton);
   }
 
   createLoginButton() {

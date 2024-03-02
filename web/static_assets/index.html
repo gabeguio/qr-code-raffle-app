@@ -7,7 +7,9 @@
     <link rel="icon" href="" type="image/png" />
     <link rel="stylesheet" type="text/css" href="styles/modern-normalize.css" />
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link rel="stylesheet" type="text/css" href="styles/components/error.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/header.css" />
+    <link rel="stylesheet" type="text/css" href="styles/components/scanner.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/footer.css" />
     <link rel="stylesheet" type="text/css" href="styles/utils.css" />
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
@@ -17,8 +19,8 @@
     <main>
       <header class="header" id="header"></header>
       <section class="sign-in container">
+        <p class="hidden error" id="error-message"></p>
         <div id="sign-in__message"></div>
-        <button></button>
       </section>
       <footer class="footer container section">
         <h3 class="footer__title">Qr Code Raffle App 1.0</h3>

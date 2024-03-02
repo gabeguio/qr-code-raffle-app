@@ -7,6 +7,7 @@
     <link rel="icon" href="" type="image/png" />
     <link rel="stylesheet" type="text/css" href="styles/modern-normalize.css" />
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link rel="stylesheet" type="text/css" href="styles/components/error.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/header.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/scanner.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/footer.css" />
@@ -21,12 +22,11 @@
         <button class="btn scanner-btn" id="startScanning" color="black">Scan a Vistor</button>
       </section>
       <section>
-        <p>Spinner Below</p>
         <span class="loader"></span>
       </section>
       <section class="scanner" id="scanner">
-        <div id="reader"></div>
-        <div id="writer"></div>
+        <div class="reader" id="reader"></div>
+        <p class="scanner-writer" id="writer"></p>
       </section>
       <footer class="footer container section">
         <h3 class="footer__title">Qr Code Raffle App 1.0</h3>

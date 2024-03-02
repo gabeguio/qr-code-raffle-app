@@ -52,15 +52,6 @@
 
 /* xs */
 @media (min-width: 475px) {
-  .header__emblem-mini {
-    display: none;
-  }
-  .header__emblem-small {
-    display: inline;
-  }
-  .header__emblem-large {
-    display: none;
-  }
 }
 
 /* sm */
@@ -82,7 +73,7 @@
     font-size: var(--size-xs);
     text-decoration: none;
     font-weight: 600;
-    color: var(--clr-gray600);
+    color: var(--clr-blue600);
     letter-spacing: -0.05em;
   }
 
@@ -92,13 +83,13 @@
   }
 
   .header__line {
-    border: 1px solid var(--clr-gray600);
+    border: 1px solid var(--clr-blue600);
     padding-top: 1.5em;
   }
 
   .header__sun {
     display: block;
-    color: var(--clr-gray600);
+    color: var(--clr-blue600);
     width: var(--size-base);
     height: var(--size-base);
   }

@@ -18,28 +18,64 @@ class Scanner extends BindingClass {
    * Add the header to the page and load the Client.
    */
   async mount() {
-    document.getElementById("startScanning").addEventListener("click", this.loadScanner);
+    // Add header to the page
     this.header.addHeaderToPage();
-    this.client = new RaffleClient();
-    // this.loadScanner();
 
+    // Initialize RaffleClient
+    this.client = new RaffleClient();
+
+    // Retrieve current user's identity
     const currentUser = await this.client.getIdentity();
+
+    // If currentUser is null, redirect to index.html
+    if (!currentUser) {
+      window.location.href = "index.html";
+      return; // Stop further execution
+    }
+
+    // Set up event listener for starting scanning
+    document.getElementById("startScanning").addEventListener("click", this.loadScanner);
+
+    // Clear any previous error messages and hide the error message display
+    const errorMessageDisplay = document.getElementById("error-message");
+    errorMessageDisplay.innerText = ``;
+    errorMessageDisplay.classList.add("hidden");
+
     const scannerEmail = currentUser.email;
 
-    const scanner = await this.client.getScanner(scannerEmail, (error) => {
-      console.log("getScanner error");
-      console.log(`Error: ${error.message}`);
-    });
+    const spinner = document.querySelector(".loader");
+    spinner.style.display = "block";
 
-    this.dataStore.set("scannerEmail", scanner.scannerEmail);
-    this.dataStore.set("sponsorName", scanner.sponsorName);
+    try {
+      // Retrieve scanner information from the server
+      const scanner = await this.client.getScanner(scannerEmail);
+
+      // If scanner is null, redirect to registerScanner.html
+      if (!scanner) {
+        spinner.style.display = "none";
+        window.location.href = "registerScanner.html";
+        return; // Stop further execution
+      }
+
+      this.dataStore.set("scannerEmail", scanner.scannerEmail);
+      this.dataStore.set("sponsorName", scanner.sponsorName);
+      spinner.style.display = "none";
+    } catch (error) {
+      console.error("Error retrieving scanner information:", error.message);
+      errorMessageDisplay.innerText = `Error: ${error.message}`;
+      errorMessageDisplay.classList.remove("hidden");
+    }
   }
 
   loadScanner() {
-    // create a div with id reader and add to the scanner section
+    const errorMessageDisplay = document.getElementById("error-message");
+    errorMessageDisplay.innerText = ``;
+    errorMessageDisplay.classList.add("hidden");
+
     const reader = document.createElement("div");
     reader.id = "reader";
     document.getElementById("scanner").appendChild(reader);
+
     const writer = document.getElementById("writer");
     writer.innerHTML = "";
 
@@ -50,45 +86,39 @@ class Scanner extends BindingClass {
       lines.forEach((line) => {
         const [key, value] = line.split(":");
         if (key && value) {
-          // Normalize key to lowercase and remove non-alphanumeric characters
           const normalizedKey = key.trim().toLowerCase().replace(/\W/g, "");
           vCard[normalizedKey] = value.trim();
         }
       });
-
       return vCard;
+    };
+
+    const handleVisitCreation = async (sponsorName, visitorEmail, visitorFullName, visitorOrganization) => {
+      const spinner = document.querySelector(".loader");
+      spinner.style.display = "block";
+
+      try {
+        const visit = await this.client.createVisit(sponsorName, visitorEmail, visitorFullName, visitorOrganization);
+        writer.innerHTML = `<p>${visit.visitorFullName} has visited ${sponsorName}!</p>`;
+      } catch (error) {
+        console.error("Error adding visitor information:", error.message);
+        errorMessageDisplay.innerText = `Error: ${error.message}`;
+        errorMessageDisplay.classList.remove("hidden");
+      } finally {
+        spinner.style.display = "none";
+      }
     };
 
     const onScanSuccess = async (decodedText, decodedResult) => {
       const vCardObject = parseVCard(decodedText);
-
       const sponsorName = this.dataStore.get("sponsorName");
-      console.log(sponsorName);
-      const { email, fn = "N/A", org = "N/A" } = vCardObject;
-      const visitorEmail = email;
-      const visitorFullName = fn;
-      const visitorOrganization = org;
+      const { email: visitorEmail, fn: visitorFullName = "N/A", org: visitorOrganization = "N/A" } = vCardObject;
 
-      try {
-        //start spinner
-        const spinner = document.querySelector(".loader");
-        spinner.style.display = "block";
-        const visit = await this.client.createVisit(sponsorName, visitorEmail, visitorFullName, visitorOrganization);
-        console.log(visit);
-        //stop spinner
-        spinner.style.display = "none";
-        document.getElementById("writer").innerHTML = `<p>${visit.visitorFullName} has been checked in!</p>`;
-      } catch (error) {
-        console.error(error.message);
-        // Handle error appropriately
-      }
-
-      // this will stop the scanner (video feed) and clear the scan area.
+      await handleVisitCreation(sponsorName, visitorEmail, visitorFullName, visitorOrganization);
       html5QrcodeScanner.clear();
     };
 
-    let html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: { width: 200, height: 200 } }, /* verbose= */ false);
-
+    const html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: { width: 200, height: 200 } }, false);
     html5QrcodeScanner.render(onScanSuccess);
   }
 }

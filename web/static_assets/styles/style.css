@@ -1,10 +1,12 @@
 :root {
-  --clr-dark: #f9fafb;
-  --clr-light: #0b0c0f;
-  --clr-gray400: #0b0c0f;
-  --clr-gray600: #0b0c0f;
-  --clr-gray800: #0b0c0f;
+  --clr-dark: #132046;
+  --clr-light: #dbeafe;
+  --clr-blue400: #60a5fa;
+  --clr-blue600: #2563eb;
+  --clr-blue800: #1e40af;
   --clr-error: #cc0000;
+  --clr-primary: #FFCE09;
+  --clr-secondary: #38bdf8;
 
   /* sizes */
   --size-xxs: 0.5rem; /* 8 */
@@ -59,18 +61,39 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Button styles */
 button {
-  border: 1px solid var(--clr-light);
-  padding: 16px;
-  border-radius: 4px;
+  background-color: #FFCE09; /* Use your primary color */
+  border: none;
+  color: var(--clr-dark);
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
+/* Hover effect */
+button:hover {
+  background-color: #e0bb00; /* Darken the primary color on hover */
+}
+
+/* Click effect */
+button:active {
+  background-color: #bf9e00; /* Darken the primary color further on click */
+}
+
+
 a {
-  color: var(--clr-primary);
+  color: var(--clr-secondary);
 }
 
 strong {
-  color: var(--clr-primary);
+  color: var(--clr-secondary);
 }
 
 /* Scrollbar */

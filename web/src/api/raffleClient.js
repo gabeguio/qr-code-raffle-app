@@ -71,15 +71,14 @@ export default class RaffleClient extends BindingClass {
   }
 
   /**
-   * Get the songs on a given playlist by the playlist's identifier.
-   * @param id Unique identifier for a playlist
+   * Get the scanner by the current user's email.
+   * @param scannerEmail email for a scanner
    * @param errorCallback (Optional) A function to execute if the call fails.
-   * @returns The list of songs on a playlist.
+   * @returns a scanner profile for the current scanner.
    */
   async getScanner(scannerEmail, errorCallback) {
     try {
       const response = await this.axiosClient.get(`scanners/${scannerEmail}`);
-      console.log("Get Scanner Reponse ", response);
       return response.data.scanner;
     } catch (error) {
       this.handleError(error, errorCallback);
@@ -88,7 +87,8 @@ export default class RaffleClient extends BindingClass {
 
   /**
    * Create the scanner for the given email and sponsor.
-   * @param sponsorName Unique identifier for a sponsor
+   * @param scannerEmail email for a scanner
+   * @param sponsorName a sponsors name the scanner is scanning for
    * @param errorCallback (Optional) A function to execute if the call fails.
    * @returns The scanner's metadata.
    */
@@ -113,6 +113,15 @@ export default class RaffleClient extends BindingClass {
     }
   }
 
+  /**
+   * Add a visitor to the current sponsor.
+   * @param sponsorName a sponsors name the scanner is scanning for
+   * @param visitorEmail email of the person visiting
+   * @param visitorFullName full name of the person visiting
+   * @param visitorOrganization organization of the person visiting
+   * @param errorCallback (Optional) A function to execute if the call fails.
+   * @returns The scanner's metadata.
+   */
   async createVisit(sponsorName, visitorEmail, visitorFullName, visitorOrganization, errorCallback) {
     try {
       const token = await this.getTokenOrThrow("Only authenticated users can create visits");
@@ -180,53 +189,6 @@ export default class RaffleClient extends BindingClass {
       this.handleError(error, errorCallback);
     }
   }
-
-  // /**
-  //  * Add a song to a playlist.
-  //  * @param id The id of the playlist to add a song to.
-  //  * @param asin The asin that uniquely identifies the album.
-  //  * @param trackNumber The track number of the song on the album.
-  //  * @returns The list of songs on a playlist.
-  //  */
-  // async addSongToPlaylist(id, asin, trackNumber, errorCallback) {
-  //   try {
-  //     const token = await this.getTokenOrThrow("Only authenticated users can add a song to a playlist.");
-  //     const response = await this.axiosClient.post(
-  //       `playlists/${id}/songs`,
-  //       {
-  //         id: id,
-  //         asin: asin,
-  //         trackNumber: trackNumber,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     return response.data.songList;
-  //   } catch (error) {
-  //     this.handleError(error, errorCallback);
-  //   }
-  // }
-
-  // /**
-  //  * Search for a soong.
-  //  * @param criteria A string containing search criteria to pass to the API.
-  //  * @returns The playlists that match the search criteria.
-  //  */
-  // async search(criteria, errorCallback) {
-  //   try {
-  //     const queryParams = new URLSearchParams({ q: criteria });
-  //     const queryString = queryParams.toString();
-
-  //     const response = await this.axiosClient.get(`playlists/search?${queryString}`);
-
-  //     return response.data.playlists;
-  //   } catch (error) {
-  //     this.handleError(error, errorCallback);
-  //   }
-  // }
 
   /**
    * Helper method to log the error and run any error functions.

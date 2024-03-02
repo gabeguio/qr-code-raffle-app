@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/error.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/header.css" />
+    <link rel="stylesheet" type="text/css" href="styles/components/scanner.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/footer.css" />
     <link rel="stylesheet" type="text/css" href="styles/utils.css" />
     <title>Register Scanner Page</title>
@@ -16,21 +17,28 @@
   <body>
     <main>
       <header class="header" id="header"></header>
-      <section class="register-scanner">
-        <div class="card">
+      <section>
+        <span class="loader"></span>
+      </section>
+      <section class="register-scanner-header">
+        <p class="error" id="error-message">hello</p>
+        <span class="loader" display="block"></span>
+      </section>
+      <section class="registration-form">
+        <div class="form-container hidden" id="form-container">
           <h2>Register a New Scanner</h2>
-          <form class="" id="register-scanner-form">
+          <form id="register-scanner-form">
             <p class="hidden error" id="error-message"></p>
-            <p class="form-field">
-              <label for="sponsor-name">Sponsor Name</label>
+            <label for="sponsor-name">Sponsor Name</label>
+            <p>
               <select required class="validated-field" id="sponsor-name" name="sponsor-name" autofocus>
                 <option value="" selected disabled>Select Sponsor</option>
                 <option value="DataTune">DataTune</option>
                 <!-- Add more options here -->
               </select>
             </p>
+            <button type="submit" href="#" class="button" id="register">Register Scanner</button>
           </form>
-          <a href="#" class="btn" id="register-scanner">Register Scanner</a>
         </div>
       </section>
       <footer class="footer container section">
