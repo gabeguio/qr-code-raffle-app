@@ -4,6 +4,7 @@
   --clr-gray400: #0b0c0f;
   --clr-gray600: #0b0c0f;
   --clr-gray800: #0b0c0f;
+  --clr-error: #cc0000;
 
   /* sizes */
   --size-xxs: 0.5rem; /* 8 */

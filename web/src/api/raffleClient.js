@@ -70,20 +70,21 @@ export default class RaffleClient extends BindingClass {
     return await this.authenticator.getUserToken();
   }
 
-    /**
+  /**
    * Get the songs on a given playlist by the playlist's identifier.
    * @param id Unique identifier for a playlist
    * @param errorCallback (Optional) A function to execute if the call fails.
    * @returns The list of songs on a playlist.
    */
-    async getScanner(email, errorCallback) {
-      try {
-        const response = await this.axiosClient.get(`scanners`);
-        return response.data.songList;
-      } catch (error) {
-        this.handleError(error, errorCallback);
-      }
+  async getScanner(scannerEmail, errorCallback) {
+    try {
+      const response = await this.axiosClient.get(`scanners/${scannerEmail}`);
+      console.log("Get Scanner Reponse ", response);
+      return response.data.scanner;
+    } catch (error) {
+      this.handleError(error, errorCallback);
     }
+  }
 
   /**
    * Create the scanner for the given email and sponsor.
@@ -91,12 +92,13 @@ export default class RaffleClient extends BindingClass {
    * @param errorCallback (Optional) A function to execute if the call fails.
    * @returns The scanner's metadata.
    */
-  async createScanner(sponsorName, errorCallback) {
+  async createScanner(scannerEmail, sponsorName, errorCallback) {
     try {
       const token = await this.getTokenOrThrow("Only authenticated users can create a scanner profile");
       const response = await this.axiosClient.post(
         `scanners`,
         {
+          scannerEmail: scannerEmail,
           sponsorName: sponsorName,
         },
         {
@@ -113,9 +115,7 @@ export default class RaffleClient extends BindingClass {
 
   async createVisit(sponsorName, visitorEmail, visitorFullName, visitorOrganization, errorCallback) {
     try {
-      console.log("hello");
       const token = await this.getTokenOrThrow("Only authenticated users can create visits");
-      console.log(token);
       const response = await this.axiosClient.post(
         `visits`,
         {

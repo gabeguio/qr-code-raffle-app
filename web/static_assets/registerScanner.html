@@ -7,6 +7,7 @@
     <link rel="icon" href="" type="image/png" />
     <link rel="stylesheet" type="text/css" href="styles/modern-normalize.css" />
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link rel="stylesheet" type="text/css" href="styles/components/error.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/header.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/footer.css" />
     <link rel="stylesheet" type="text/css" href="styles/utils.css" />
@@ -15,6 +16,23 @@
   <body>
     <main>
       <header class="header" id="header"></header>
+      <section class="register-scanner">
+        <div class="card">
+          <h2>Register a New Scanner</h2>
+          <form class="" id="register-scanner-form">
+            <p class="hidden error" id="error-message"></p>
+            <p class="form-field">
+              <label for="sponsor-name">Sponsor Name</label>
+              <select required class="validated-field" id="sponsor-name" name="sponsor-name" autofocus>
+                <option value="" selected disabled>Select Sponsor</option>
+                <option value="DataTune">DataTune</option>
+                <!-- Add more options here -->
+              </select>
+            </p>
+          </form>
+          <a href="#" class="btn" id="register-scanner">Register Scanner</a>
+        </div>
+      </section>
       <footer class="footer container section">
         <h3 class="footer__title">Qr Code Raffle App 1.0</h3>
         <h3 class="footer__title">

@@ -228,11 +228,13 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        Service:
           Type: Api
           Properties:
             Path: /scanners/{scannerEmail}
             Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   CreateScannerLambda:
     Type: AWS::Serverless::Function

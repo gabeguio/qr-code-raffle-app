@@ -39,7 +39,6 @@ class Index extends BindingClass {
       signInMessage.appendChild(paragraphElement);
       signInMessage.appendChild(loginButton);
     } else {
-      this.dataStore.set("userEmail", currentUser.email);
       window.location.href = "/registerScanner.html";
     }
   }

@@ -22,6 +22,17 @@ class Scanner extends BindingClass {
     this.header.addHeaderToPage();
     this.client = new RaffleClient();
     // this.loadScanner();
+
+    const currentUser = await this.client.getIdentity();
+    const scannerEmail = currentUser.email;
+
+    const scanner = await this.client.getScanner(scannerEmail, (error) => {
+      console.log("getScanner error");
+      console.log(`Error: ${error.message}`);
+    });
+
+    this.dataStore.set("scannerEmail", scanner.scannerEmail);
+    this.dataStore.set("sponsorName", scanner.sponsorName);
   }
 
   loadScanner() {
@@ -51,15 +62,19 @@ class Scanner extends BindingClass {
     const onScanSuccess = async (decodedText, decodedResult) => {
       const vCardObject = parseVCard(decodedText);
 
+      const sponsorName = this.dataStore.get("sponsorName");
+      console.log(sponsorName);
       const { email, fn = "N/A", org = "N/A" } = vCardObject;
-
-      const sponsorName = "DataTuneConf";
+      const visitorEmail = email;
+      const visitorFullName = fn;
+      const visitorOrganization = org;
 
       try {
         //start spinner
         const spinner = document.querySelector(".loader");
         spinner.style.display = "block";
-        const visit = await this.client.createVisit(sponsorName, email, fn, org);
+        const visit = await this.client.createVisit(sponsorName, visitorEmail, visitorFullName, visitorOrganization);
+        console.log(visit);
         //stop spinner
         spinner.style.display = "none";
         document.getElementById("writer").innerHTML = `<p>${visit.visitorFullName} has been checked in!</p>`;
