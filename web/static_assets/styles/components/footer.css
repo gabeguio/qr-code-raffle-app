@@ -1,3 +1,7 @@
+.footer {
+  margin-top: 20rem;
+}
+
 .footer__title {
   font-size: var(--clr-xs);
   font-weight: 400;

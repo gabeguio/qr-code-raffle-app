@@ -139,7 +139,6 @@ export default class RaffleClient extends BindingClass {
           },
         }
       );
-      console.log(response.data);
       return response.data.visit;
     } catch (error) {
       console.log("error");

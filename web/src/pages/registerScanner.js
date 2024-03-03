@@ -2,7 +2,7 @@ import RaffleClient from "../api/raffleClient";
 import Header from "../components/Header";
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/dataStore";
-import options from "../data/sponsorsData";
+import options from "../data/sponsorOptions";
 
 /**
  * Logic needed to register a scanner profile for the current user.
@@ -10,7 +10,7 @@ import options from "../data/sponsorsData";
 class RegisterScanner extends BindingClass {
   constructor() {
     super();
-    this.bindClassMethods(["mount", "checkRegistration", "submit"], this);
+    this.bindClassMethods(["mount", "checkRegistration", , "addSponsorOptions", "submit"], this);
     this.dataStore = new DataStore();
     this.header = new Header(this.dataStore);
   }
@@ -25,10 +25,7 @@ class RegisterScanner extends BindingClass {
   }
 
   async checkRegistration() {
-    const errorMessageDisplay = document.getElementById("error-message");
-    errorMessageDisplay.innerText = ``;
-    errorMessageDisplay.classList.add("hidden");
-    const spinner = document.querySelector(".loader");
+    const spinner = document.querySelector(".spinner");
     spinner.style.display = "block";
 
     try {
@@ -50,6 +47,7 @@ class RegisterScanner extends BindingClass {
         return;
       }
 
+      this.addSponsorOptions();
       const formContainer = document.getElementById("form-container");
       formContainer.classList.remove("hidden");
 
@@ -64,6 +62,17 @@ class RegisterScanner extends BindingClass {
     }
   }
 
+  // add all the items from the options data to the select element with id sponsor-name
+  addSponsorOptions() {
+    const sponsorSelect = document.getElementById("sponsor-name");
+    options.forEach((sponsor) => {
+      const option = document.createElement("option");
+      option.value = sponsor;
+      option.innerText = sponsor;
+      sponsorSelect.appendChild(option);
+    });
+  }
+
   /**
    * Method to run when the current user is signed up, but not registering. Call the raffleClient to create a scanner record
    * with the select sponsor.
@@ -71,10 +80,10 @@ class RegisterScanner extends BindingClass {
   async submit(evt) {
     evt.preventDefault();
 
-    var form = document.getElementById("register-scanner-form");
+    var registerForm = document.getElementById("register-form__form");
 
     // Check validity of the form
-    if (form.checkValidity()) {
+    if (registerForm.checkValidity()) {
       // If the form is valid, submit it
       const registerButton = document.getElementById("register");
       const origButtonText = registerButton.innerText;
@@ -94,15 +103,13 @@ class RegisterScanner extends BindingClass {
         }
       } catch (error) {
         console.error("Error registering scanner:", error.message);
-        errorMessageDisplay.innerText = `Error: ${error.message}`;
-        errorMessageDisplay.classList.remove("hidden");
       } finally {
         // Reset button text
         registerButton.innerText = origButtonText;
       }
     } else {
       // If the form is invalid, display error messages or take other actions
-      alert("Please fill out all required fields.");
+      alert("Please select the sponsor you are scanning for");
     }
   }
 }

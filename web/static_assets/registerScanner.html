@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/error.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/header.css" />
+    <link rel="stylesheet" type="text/css" href="styles/components/register.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/scanner.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/footer.css" />
     <link rel="stylesheet" type="text/css" href="styles/utils.css" />
@@ -17,19 +18,13 @@
   <body>
     <main>
       <header class="header" id="header"></header>
-      <section>
-        <span class="loader"></span>
-      </section>
-      <section class="register-scanner-header">
-        <p class="error" id="error-message">hello</p>
-        <span class="loader" display="block"></span>
-      </section>
-      <section class="registration-form">
+      <section class="registration-form container section">
+        <span class="spinner"></span>
         <div class="form-container hidden" id="form-container">
           <h2>Register a New Scanner</h2>
-          <form id="register-scanner-form">
-            <p class="hidden error" id="error-message"></p>
-            <label for="sponsor-name">Sponsor Name</label>
+          <h3 class="registration-form__subtitle">Please select your sponsor</h3>
+          <form id="register-form__form">
+            <label for="sponsor-name"></label>
             <p>
               <select required class="validated-field" id="sponsor-name" name="sponsor-name" autofocus>
                 <option value="" selected disabled>Select Sponsor</option>
@@ -42,7 +37,7 @@
         </div>
       </section>
       <footer class="footer container section">
-        <h3 class="footer__title">Qr Code Raffle App 1.0</h3>
+        <h3 class="footer__title">Conference Scanner</h3>
         <h3 class="footer__title">
           By
           <a href="https://www.linkedin.com/in/gabe-guio/">Gabe Guio</a>

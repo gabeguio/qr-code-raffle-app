@@ -16,19 +16,23 @@
 /* 2xl */
 /* @media (min-width: 1536px) {} */
 
-/* .btn {
-  display: inline-block;
+.btn {
   font-weight: 400;
-  text-decoration: none;
-  letter-spacing: -0.05em;
-  background-color: var(--clr-light);
-  color: #fff;
+  background-color: var(--clr-secondary);
+  border: none;
+  color: var(--clr-dark);
   padding: 0.5em 1em;
-  border-radius: 6px;
+  text-align: center;
+  text-decoration: none;
+  font-size: var(--size-xs);
   transition: transform 0.3s;
-} */
+  cursor: pointer;
+  border-radius: 6px;
+  letter-spacing: -0.05em;
+  width: max-content;
+}
 
-.loader {
+.spinner {
   display: none;
   text-align: center;
   text-decoration: none;

@@ -36,14 +36,9 @@ class Scanner extends BindingClass {
     // Set up event listener for starting scanning
     document.getElementById("startScanning").addEventListener("click", this.loadScanner);
 
-    // Clear any previous error messages and hide the error message display
-    const errorMessageDisplay = document.getElementById("error-message");
-    errorMessageDisplay.innerText = ``;
-    errorMessageDisplay.classList.add("hidden");
-
     const scannerEmail = currentUser.email;
 
-    const spinner = document.querySelector(".loader");
+    const spinner = document.querySelector(".spinner");
     spinner.style.display = "block";
 
     try {
@@ -57,21 +52,17 @@ class Scanner extends BindingClass {
         return; // Stop further execution
       }
 
-      this.dataStore.set("scannerEmail", scanner.scannerEmail);
+      const currentSponsor = document.getElementById("scanner_current-sponsor");
+      currentSponsor.innerText = `You are scanning for ${scanner.sponsorName}`;
       this.dataStore.set("sponsorName", scanner.sponsorName);
+
       spinner.style.display = "none";
     } catch (error) {
       console.error("Error retrieving scanner information:", error.message);
-      errorMessageDisplay.innerText = `Error: ${error.message}`;
-      errorMessageDisplay.classList.remove("hidden");
     }
   }
 
   loadScanner() {
-    const errorMessageDisplay = document.getElementById("error-message");
-    errorMessageDisplay.innerText = ``;
-    errorMessageDisplay.classList.add("hidden");
-
     const reader = document.createElement("div");
     reader.id = "reader";
     document.getElementById("scanner").appendChild(reader);
@@ -94,7 +85,7 @@ class Scanner extends BindingClass {
     };
 
     const handleVisitCreation = async (sponsorName, visitorEmail, visitorFullName, visitorOrganization) => {
-      const spinner = document.querySelector(".loader");
+      const spinner = document.querySelector(".spinner");
       spinner.style.display = "block";
 
       try {
@@ -102,8 +93,6 @@ class Scanner extends BindingClass {
         writer.innerHTML = `<p>${visit.visitorFullName} has visited ${sponsorName}!</p>`;
       } catch (error) {
         console.error("Error adding visitor information:", error.message);
-        errorMessageDisplay.innerText = `Error: ${error.message}`;
-        errorMessageDisplay.classList.remove("hidden");
       } finally {
         spinner.style.display = "none";
       }

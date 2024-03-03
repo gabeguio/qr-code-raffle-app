@@ -9,51 +9,44 @@ import DataStore from "../util/dataStore";
 class Index extends BindingClass {
   constructor() {
     super();
-    this.bindClassMethods(["mount", "checkSignIn", "displaySignInMessage", "createLoginButton", "createButton"], this);
+    this.bindClassMethods(["mount", "checkFrontpage", "displayFrontpageSubtitle", "createLoginButton", "createButton"], this);
     this.dataStore = new DataStore();
     this.header = new Header(this.dataStore);
   }
 
   /**
-   * Add the header, load the service client, and check the user sign-in status.
+   * Add the header, load the service client, and check the user frontpage status.
    */
   mount() {
     this.header.addHeaderToPage();
     this.client = new RaffleClient();
-    this.checkSignIn();
+    this.checkFrontpage();
   }
 
-  async checkSignIn() {
-    const errorMessageDisplay = document.getElementById("error-message");
-    errorMessageDisplay.innerText = ``;
-    errorMessageDisplay.classList.add("hidden");
-
+  async checkFrontpage() {
     try {
       const currentUser = await this.client.getIdentity();
 
       if (currentUser == null) {
-        this.displaySignInMessage();
+        this.displayFrontpageSubtitle();
       } else {
         window.location.href = "/registerScanner.html";
       }
     } catch (error) {
-      console.error("Error checking sign-in status:", error.message);
-      errorMessageDisplay.innerText = `Error: ${error.message}`;
-      errorMessageDisplay.classList.remove("hidden");
+      console.error("Error checking frontpage status:", error.subtitle);
     }
   }
 
-  displaySignInMessage() {
-    const signInMessage = document.getElementById("sign-in__message");
-    const paragraphElement = document.createElement("p");
-    // add class "sign-in__message" to the paragraph element
-    paragraphElement.classList.add("sign-in__message");
-    paragraphElement.innerHTML = "Please sign in to register a scanner profile.";
+  displayFrontpageSubtitle() {
+    const frontpageElement = document.getElementById("frontpage__subtitle");
+
     const loginButton = this.createLoginButton();
-    // add a login button to the sign-in message
-    loginButton.classList.add("sign-in__button");
-    signInMessage.appendChild(paragraphElement);
-    signInMessage.appendChild(loginButton);
+    // add a login button to the frontpage subtitle
+    loginButton.classList.add("frontpage__button");
+    loginButton.classList.add("btn");
+
+    // add loginbutton as the last element in frontpageElement
+    frontpageElement.appendChild(loginButton);
   }
 
   createLoginButton() {
