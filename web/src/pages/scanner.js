@@ -143,6 +143,10 @@ class Scanner extends BindingClass {
     const visits = [
       { visitorFullName: "John Doe", visitorEmail: "john@email.com", visitorOrganization: "ACME" },
       { visitorFullName: "Jane Doe", visitorEmail: "jane@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Jane Doe", visitorEmail: "jane@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Jane Doe", visitorEmail: "jane@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Jane Doe", visitorEmail: "jane@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Jane Doe", visitorEmail: "jane@email.com", visitorOrganization: "ACME" },
       { visitorFullName: "Avery Doe", visitorEmail: "avery@email.com", visitorOrganization: "ACME" },
     ];
 
