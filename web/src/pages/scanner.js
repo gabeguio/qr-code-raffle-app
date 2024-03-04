@@ -52,8 +52,12 @@ class Scanner extends BindingClass {
         return; // Stop further execution
       }
 
-      const currentSponsor = document.getElementById("scanner__current-sponsor");
-      currentSponsor.innerText = `You are scanning for ${scanner.sponsorName}`;
+      const scannerCurrentSponsor = document.getElementById("scanner__current-sponsor");
+      scannerCurrentSponsor.innerText = `You are scanning for ${scanner.sponsorName}`;
+
+      const visitorsCurrentSponsor = document.getElementById("visitors__current-sponsor");
+      visitorsCurrentSponsor.innerText = `View Visitors for ${scanner.sponsorName}`;
+
       this.dataStore.set("sponsorName", scanner.sponsorName);
       document.getElementById("visitors__btn").addEventListener("click", this.loadVisitorTable);
 

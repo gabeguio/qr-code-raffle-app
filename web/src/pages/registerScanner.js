@@ -25,8 +25,8 @@ class RegisterScanner extends BindingClass {
   }
 
   async checkRegistration() {
-    const spinner = document.querySelector(".spinner");
-    spinner.style.display = "block";
+    const registrationSpinner = document.getElementById("registration-spinner");
+    registrationSpinner.style.display = "block";
 
     try {
       // Check if user is logged in
@@ -49,7 +49,7 @@ class RegisterScanner extends BindingClass {
 
       this.addSponsorOptions();
       const formContainer = document.getElementById("form-container");
-      formContainer.classList.remove("hidden");
+      formContainer.classList.remove("form-hidden");
 
       const registerButton = document.getElementById("register");
       registerButton.addEventListener("click", this.submit);
@@ -58,7 +58,7 @@ class RegisterScanner extends BindingClass {
       errorMessageDisplay.innerText = `Error: ${error.message}`;
       errorMessageDisplay.classList.remove("hidden");
     } finally {
-      spinner.style.display = "none";
+      registrationSpinner.style.display = "none";
     }
   }
 

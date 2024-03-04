@@ -23,6 +23,10 @@
     gap: 1rem;
   }
 
+.form-hidden {
+  display: none;
+}
+
 /* xs */
 /* @media (min-width: 475px) {} */
 
