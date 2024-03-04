@@ -1,8 +1,16 @@
-.scanner-info {
+.scanner__title {
   text-align: center;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  color: var(--clr-primary);
 }
 
-.scanner-btn {
+.scanner__info {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.scanner__btn {
   display: block;
   margin-right: auto;
   margin-left: auto;
@@ -12,10 +20,6 @@
 .reader {
   background-color: var(--clr-light);
   color: black;
-}
-
-#reader_dashboard {
-  color: var(--clr-dark);
 }
 
 .scanner-writer {
@@ -29,15 +33,41 @@
   text-align: center;
 }
 
-.sign-in__message {
-  font-size: var(--size-base);
+.visitors__title {
   text-align: center;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  color: var(--clr-primary);
 }
 
-.sign-in__button {
+.visitors__btn {
   display: block;
-  font-size: var(--size-base);
-  text-align: center;
   margin-right: auto;
   margin-left: auto;
+  margin-bottom: 2rem;
+}
+
+.visitors__info {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+#visitors__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+#visitors__table > thead > tr > th {
+  text-align: left;
+  padding-left: 0.5rem;
+}
+
+#visitors__table-body {
+  background-color: var(--clr-light);
+  color: black;
+}
+
+#visitors__table-body > tr > td {
+  padding-left: 0.5rem;
 }

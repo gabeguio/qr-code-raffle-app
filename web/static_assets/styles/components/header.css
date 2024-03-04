@@ -7,6 +7,7 @@
   position: relative;
   z-index: 9999;
   margin: 0 10px;
+  border-bottom: 1px solid var(--clr-blue400);
 }
 
 .header__menu {

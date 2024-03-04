@@ -9,7 +9,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 class Scanner extends BindingClass {
   constructor() {
     super();
-    this.bindClassMethods(["mount", "loadScanner"], this);
+    this.bindClassMethods(["mount", "loadScanner", "loadVisitorTable"], this);
     this.dataStore = new DataStore();
     this.header = new Header(this.dataStore);
   }
@@ -38,8 +38,8 @@ class Scanner extends BindingClass {
 
     const scannerEmail = currentUser.email;
 
-    const spinner = document.querySelector(".spinner");
-    spinner.style.display = "block";
+    const scanSpinner = document.getElementById("scan-spinner");
+    scanSpinner.style.display = "block";
 
     try {
       // Retrieve scanner information from the server
@@ -47,16 +47,17 @@ class Scanner extends BindingClass {
 
       // If scanner is null, redirect to registerScanner.html
       if (!scanner) {
-        spinner.style.display = "none";
+        scanSpinner.style.display = "none";
         window.location.href = "registerScanner.html";
         return; // Stop further execution
       }
 
-      const currentSponsor = document.getElementById("scanner_current-sponsor");
+      const currentSponsor = document.getElementById("scanner__current-sponsor");
       currentSponsor.innerText = `You are scanning for ${scanner.sponsorName}`;
       this.dataStore.set("sponsorName", scanner.sponsorName);
+      document.getElementById("visitors__btn").addEventListener("click", this.loadVisitorTable);
 
-      spinner.style.display = "none";
+      scanSpinner.style.display = "none";
     } catch (error) {
       console.error("Error retrieving scanner information:", error.message);
     }
@@ -85,8 +86,8 @@ class Scanner extends BindingClass {
     };
 
     const handleVisitCreation = async (sponsorName, visitorEmail, visitorFullName, visitorOrganization) => {
-      const spinner = document.querySelector(".spinner");
-      spinner.style.display = "block";
+      const scanSpinner = document.getElementById("scan-spinner");
+      scanSpinner.style.display = "block";
 
       try {
         const visit = await this.client.createVisit(sponsorName, visitorEmail, visitorFullName, visitorOrganization);
@@ -94,7 +95,7 @@ class Scanner extends BindingClass {
       } catch (error) {
         console.error("Error adding visitor information:", error.message);
       } finally {
-        spinner.style.display = "none";
+        scanSpinner.style.display = "none";
       }
     };
 
@@ -109,6 +110,58 @@ class Scanner extends BindingClass {
 
     const html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: { width: 200, height: 200 } }, false);
     html5QrcodeScanner.render(onScanSuccess);
+  }
+
+  loadVisitorTable() {
+    function emptyVisitorTable() {
+      return `
+      <table class="visitors__table" id="visitors__table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Company</th>
+        </tr>
+      </thead>
+      <tbody id="visitors__table-body">
+      </tbody>
+    </table>
+      `;
+    }
+    const visitorTableContainer = document.getElementById("visitors__table-container");
+    visitorTableContainer.innerHTML = emptyVisitorTable();
+    const visitorTable = document.getElementById("visitors__table-body");
+    visitorTable.innerHTML = "";
+    const tableSpinner = document.getElementById("table-spinner");
+    tableSpinner.style.display = "block";
+
+    // test data for getting the visitor list
+    const visits = [
+      { visitorFullName: "John Doe", visitorEmail: "john@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Jane Doe", visitorEmail: "jane@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Avery Doe", visitorEmail: "avery@email.com", visitorOrganization: "ACME" },
+    ];
+
+    // add "total number of visitors: 3" to the paragraph element with id: "visitors-total"
+    const visitorsTotal = document.getElementById("visitors__info");
+    visitorsTotal.innerText = `Total number of visitors: ${visits.length}`;
+
+    //sort visits by visitorFullName
+    visits.sort((a, b) => {
+      return a.visitorFullName.localeCompare(b.visitorFullName);
+    });
+
+    // this.client.getVisits(sponsorName).then((visits) => {
+    visits.forEach((visit) => {
+      const row = visitorTable.insertRow(-1);
+      const cell1 = row.insertCell(0);
+      const cell2 = row.insertCell(1);
+      const cell3 = row.insertCell(2);
+      cell1.innerHTML = visit.visitorFullName;
+      cell2.innerHTML = visit.visitorEmail;
+      cell3.innerHTML = visit.visitorOrganization;
+    });
+    tableSpinner.style.display = "none";
   }
 }
 
