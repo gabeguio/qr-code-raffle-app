@@ -159,7 +159,12 @@ export default class RaffleClient extends BindingClass {
    */
   async getVisits(sponsorName, errorCallback) {
     try {
-      const response = await this.axiosClient.get(`visits/${sponsorName}`);
+      const token = await this.getTokenOrThrow("Only authenticated users can get scanners");
+      const response = await this.axiosClient.get(`visits/${sponsorName}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data.visitsList;
     } catch (error) {
       this.handleError(error, errorCallback);

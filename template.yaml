@@ -233,8 +233,6 @@ Resources:
           Properties:
             Path: /scanners/{scannerEmail}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
   CreateScannerLambda:
     Type: AWS::Serverless::Function
@@ -295,8 +293,6 @@ Resources:
           Properties:
             Path: /visits/{sponsorName}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
   #-----------------------------------------------------
   # DynamoDB Configuration
