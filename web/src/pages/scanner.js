@@ -129,7 +129,7 @@ class Scanner extends BindingClass {
         <tr>
           <th>Name</th>
           <th>Email</th>
-          <th>Company</th>
+          <th>Organization</th>
         </tr>
       </thead>
       <tbody id="visitors__table-body">
@@ -146,7 +146,6 @@ class Scanner extends BindingClass {
 
     const visits = await this.client.getVisits(this.dataStore.get("sponsorName"));
 
-    // add "total number of visitors: 3" to the paragraph element with id: "visitors-total"
     const visitorsTotal = document.getElementById("visitors__info");
     if (visits == null) {
       visitorsTotal.innerText = `No visitors yet`;
@@ -171,6 +170,10 @@ class Scanner extends BindingClass {
       cell3.innerHTML = visit.visitorOrganization;
     });
     tableSpinner.style.display = "none";
+
+    //target and hide view visitors button
+    const visitorsButton = document.getElementById("visitors__btn");
+    visitorsButton.style.display = "none";
   }
 
   async loadRaffleWinner() {
@@ -187,9 +190,10 @@ class Scanner extends BindingClass {
 
     // display the random visitor in the raffle-winner-container
     raffleWinner.innerHTML = `
-      <p class="raffle__info">🎉The raffle winner is: ${randomVisitor.visitorFullName}🎉</p>
+      <p class="raffle__info">The raffle winner is: ${randomVisitor.visitorFullName}</p>
+      <p class="raffle__info">🎉🎉🎉🎉🎉🎉🎉🎉</p>
       <p class="raffle__info">Email: ${randomVisitor.visitorEmail}</p>
-      <p class="raffle__info">Company: ${randomVisitor.visitorOrganization}</p>
+      <p class="raffle__info">Organization: ${randomVisitor.visitorOrganization}</p>
     `;
 
     raffleSpinner.style.display = "none";

@@ -13,9 +13,18 @@
 }
 
 .frontpage__button {
+  background-color: var(--clr-secondary); /* Use your primary color */
+  border: none;
+  color: var(--clr-dark);
+  padding: 0.5rem 1.5rem;
+  text-align: center;
+  text-decoration: none;
   display: block;
   font-size: var(--size-base);
-  text-align: center;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: max-content;
+  border-radius: 20px;
   margin-right: auto;
   margin-left: auto;
 }

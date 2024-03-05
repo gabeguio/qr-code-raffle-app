@@ -43,7 +43,6 @@ class Index extends BindingClass {
     const loginButton = this.createLoginButton();
     // add a login button to the frontpage subtitle
     loginButton.classList.add("frontpage__button");
-    loginButton.classList.add("btn");
 
     // add loginbutton as the last element in frontpageElement
     frontpageElement.appendChild(loginButton);
@@ -55,7 +54,6 @@ class Index extends BindingClass {
 
   createButton(text, clickHandler) {
     const button = document.createElement("a");
-    button.classList.add("button");
     button.href = "#";
     button.innerText = text;
 

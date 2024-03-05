@@ -21,14 +21,13 @@
   background-color: var(--clr-secondary);
   border: none;
   color: var(--clr-dark);
-  padding: 0.5em 1em;
+  padding: 0.75rem 1.25rem;
   text-align: center;
   text-decoration: none;
-  font-size: var(--size-xs);
+  font-size: var(--size-base);
   transition: transform 0.3s;
   cursor: pointer;
   border-radius: 6px;
-  letter-spacing: -0.05em;
   width: max-content;
 }
 
