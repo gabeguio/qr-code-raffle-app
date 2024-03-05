@@ -2,6 +2,7 @@ import RaffleClient from "../api/raffleClient";
 import Header from "../components/Header";
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/dataStore";
+import grandPrizeEmailWhiteList from "../data/grandPrizeWhiteList";
 
 /**
  * Logic needed to register a scanner profile for the current user.
@@ -35,11 +36,10 @@ class GrandPrize extends BindingClass {
         window.location.href = "/index.html";
       }
 
-      // create a white list of emails that are allowed access to this page
-      const whiteList = ["gabeguio@gmail.com", "gabe.guio@gmail.com", "ed@pearsontn.org", "cameronjcyr@gmail.com"];
+      console.log(grandPrizeEmailWhiteList);
 
       // check whitelist, if not in whitelist, redirect to index.html
-      if (!whiteList.includes(currentUser.email)) {
+      if (!grandPrizeEmailWhiteList.includes(currentUser.email)) {
         window.location.href = "index.html";
         return; // Stop further execution
       }
