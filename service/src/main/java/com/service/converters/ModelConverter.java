@@ -2,8 +2,12 @@ package com.service.converters;
 
 import com.service.dynamodb.models.Scanner;
 import com.service.dynamodb.models.Visit;
+
 import com.service.models.ScannerModel;
 import com.service.models.VisitModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Converts between Data and API models.
@@ -36,5 +40,21 @@ public class ModelConverter {
                 .withVisitorFullName(visit.getVisitorFullName())
                 .withVisitorOrganization(visit.getVisitorOrganization())
                 .build();
+    }
+
+    /**
+     * Converts a provided {@link visits} into a {@link List VisitModel } representation.
+     *
+     * @param visits the visits to convert to a list of visit models
+     * @return the converted visit models list
+     */
+    public List<VisitModel> toVisitModelList(List<Visit> visits) {
+        List<VisitModel> visitModelList = new ArrayList<>();
+
+        for (int i = 0; i < visits.size(); i++) {
+            visitModelList.add(toVisitModel(visits.get(i)));
+        }
+
+        return visitModelList;
     }
 }

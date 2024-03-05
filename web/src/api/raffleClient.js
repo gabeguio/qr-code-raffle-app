@@ -14,7 +14,7 @@ export default class RaffleClient extends BindingClass {
   constructor(props = {}) {
     super();
 
-    const methodsToBind = ["clientLoaded", "getIdentity", "login", "logout", "createScanner", "createVisit", "getPlaylistSongs", "createPlaylist", "handleError"];
+    const methodsToBind = ["clientLoaded", "getIdentity", "login", "logout", "createScanner", "createVisit", "getVisits", "handleError"];
     this.bindClassMethods(methodsToBind, this);
 
     this.authenticator = new Authenticator();
@@ -78,7 +78,12 @@ export default class RaffleClient extends BindingClass {
    */
   async getScanner(scannerEmail, errorCallback) {
     try {
-      const response = await this.axiosClient.get(`scanners/${scannerEmail}`);
+      const token = await this.getTokenOrThrow("Only authenticated users can get scanners");
+      const response = await this.axiosClient.get(`scanners/${scannerEmail}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data.scanner;
     } catch (error) {
       this.handleError(error, errorCallback);
@@ -147,43 +152,15 @@ export default class RaffleClient extends BindingClass {
   }
 
   /**
-   * Get the songs on a given playlist by the playlist's identifier.
-   * @param id Unique identifier for a playlist
+   * Get the visits on a for a given sponsor by the sponsor's name.
+   * @param sponsorName Unique identifier for a list of visits
    * @param errorCallback (Optional) A function to execute if the call fails.
    * @returns The list of songs on a playlist.
    */
-  async getPlaylistSongs(id, errorCallback) {
+  async getVisits(sponsorName, errorCallback) {
     try {
-      const response = await this.axiosClient.get(`playlists/${id}/songs`);
-      return response.data.songList;
-    } catch (error) {
-      this.handleError(error, errorCallback);
-    }
-  }
-
-  /**
-   * Create a new playlist owned by the current user.
-   * @param name The name of the playlist to create.
-   * @param tags Metadata tags to associate with a playlist.
-   * @param errorCallback (Optional) A function to execute if the call fails.
-   * @returns The playlist that has been created.
-   */
-  async createPlaylist(name, tags, errorCallback) {
-    try {
-      const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
-      const response = await this.axiosClient.post(
-        `playlists`,
-        {
-          name: name,
-          tags: tags,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return response.data.playlist;
+      const response = await this.axiosClient.get(`visits/${sponsorName}`);
+      return response.data.visitsList;
     } catch (error) {
       this.handleError(error, errorCallback);
     }

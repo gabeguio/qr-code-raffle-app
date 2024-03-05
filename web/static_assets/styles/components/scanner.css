@@ -112,6 +112,10 @@ th {
   margin-bottom: 1rem;
 }
 
+.datatune-gold {
+  color: var(--clr-primary);
+}
+
 .raffle-winner {
   display: none;
   border: 2px solid var(--clr-primary);

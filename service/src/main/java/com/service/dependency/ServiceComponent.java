@@ -3,6 +3,7 @@ package com.service.dependency;
 import com.service.activity.CreateScannerActivity;
 import com.service.activity.CreateVisitActivity;
 import com.service.activity.GetScannerActivity;
+import com.service.activity.GetVisitsActivity;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -28,4 +29,9 @@ public interface ServiceComponent {
      * @return CreateVisitActivity
      */
     CreateVisitActivity provideCreateVisitActivity();
+    /**
+     * Provides the relevant activity.
+     * @return GetVisitsActivity
+     */
+    GetVisitsActivity provideGetVisitsActivity();
 }

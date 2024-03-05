@@ -121,7 +121,7 @@ class Scanner extends BindingClass {
     html5QrcodeScanner.render(onScanSuccess);
   }
 
-  loadVisitorTable() {
+  async loadVisitorTable() {
     function emptyVisitorTable() {
       return `
       <table class="visitors__table" id="visitors__table">
@@ -144,20 +144,16 @@ class Scanner extends BindingClass {
     const tableSpinner = document.getElementById("table-spinner");
     tableSpinner.style.display = "block";
 
-    // test data for getting the visitor list
-    const visits = [
-      { visitorFullName: "Allison Doe", visitorEmail: "allison@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Jake Doe", visitorEmail: "jake@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Daniel Doe", visitorEmail: "daniel@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Alex Doe", visitorEmail: "alex@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Bob Doe", visitorEmail: "bob@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "John Doe", visitorEmail: "john@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Avery Doe", visitorEmail: "avery@email.com", visitorOrganization: "ACME" },
-    ];
+    const visits = await this.client.getVisits(this.dataStore.get("sponsorName"));
 
     // add "total number of visitors: 3" to the paragraph element with id: "visitors-total"
     const visitorsTotal = document.getElementById("visitors__info");
-    visitorsTotal.innerText = `Total number of visitors: ${visits.length}`;
+    if (visits == null) {
+      visitorsTotal.innerText = `No visitors yet`;
+      tableSpinner.style.display = "none";
+      return;
+    }
+    visitorsTotal.innerHTML = `Total number of visitors: <span class="datatune-gold">${visits.length}</span>`;
 
     //sort visits by visitorFullName
     visits.sort((a, b) => {
@@ -177,7 +173,7 @@ class Scanner extends BindingClass {
     tableSpinner.style.display = "none";
   }
 
-  loadRaffleWinner() {
+  async loadRaffleWinner() {
     const raffleSpinner = document.getElementById("raffle-spinner");
     raffleSpinner.style.display = "block";
     const raffleWinner = document.getElementById("raffle-winner");
@@ -185,24 +181,13 @@ class Scanner extends BindingClass {
     raffleWinner.style.display = "block";
 
     // get a random visitor from this.client.getVisits(sponsorName)
-    // const randomVisitor = this.client.getRandomVisitor(sponsorName);
-
-    const visits = [
-      { visitorFullName: "Allison Doe", visitorEmail: "allison@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Jake Doe", visitorEmail: "jake@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Daniel Doe", visitorEmail: "daniel@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Alex Doe", visitorEmail: "alex@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Bob Doe", visitorEmail: "bob@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "John Doe", visitorEmail: "john@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Avery Doe", visitorEmail: "avery@email.com", visitorOrganization: "ACME" },
-    ];
-
+    const visits = await this.client.getVisits(this.dataStore.get("sponsorName"));
     // select random visit from visits
     const randomVisitor = visits[Math.floor(Math.random() * visits.length)];
 
     // display the random visitor in the raffle-winner-container
     raffleWinner.innerHTML = `
-      <p class="raffle__info">The raffle winner is: ${randomVisitor.visitorFullName}</p>
+      <p class="raffle__info">🎉The raffle winner is: ${randomVisitor.visitorFullName}🎉</p>
       <p class="raffle__info">Email: ${randomVisitor.visitorEmail}</p>
       <p class="raffle__info">Company: ${randomVisitor.visitorOrganization}</p>
     `;

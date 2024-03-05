@@ -3,6 +3,13 @@ package com.service.dynamodb;
 import com.service.dynamodb.models.Visit;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -23,22 +30,34 @@ public class VisitDao {
         this.dynamoDbMapper = dynamoDbMapper;
     }
 
-    //    /**
-    //     * Returns the {@link Visit} corresponding to the specified sponsor name and visitor email.
-    //     *
-    //     * @param sponsorName the sponsor.
-    //     * @param visitorEmail the visitor email.
-    //     * @return the stored Visit, or null if none was found.
-    //     */
-    //    public Scanner getVisitorBySponsor(String sponsorName) {
-    //        Scanner scanner = this.dynamoDbMapper.load(Scanner.class, scannerEmail, sponsorName);
-    //
-    //        if (scanner == null) {
-    //            throw new ScannerNotFoundException("Could not find scanner with email " + scannerEmail +
-    //                    " and sponsor name " + sponsorName);
-    //        }
-    //        return scanner;
-    //    }
+
+    /**
+     * Queries (gets) a list of visitors by the sponsor's name.
+     *
+     * @param sponsorName the sponsor name querying the visits table
+     * @return visitList the list of all visitors for the provided sponsorName
+     */
+    public List<Visit> getVisitsBySponsorName(String sponsorName) {
+
+        if (sponsorName == null) {
+            throw new IllegalArgumentException("passed in sponsorName is null");
+        }
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":sponsorName", new AttributeValue().withS(sponsorName));
+
+        DynamoDBQueryExpression<Visit> queryExpression = new DynamoDBQueryExpression<Visit>()
+                .withKeyConditionExpression("sponsorName = :sponsorName")
+                .withExpressionAttributeValues(valueMap);
+
+        PaginatedQueryList<Visit> visitList = dynamoDbMapper.query(Visit.class, queryExpression);
+
+        if (visitList == null) {
+            throw new RuntimeException("Visits not found for requested sponsorName");
+        }
+
+        return visitList;
+    }
+
 
     /**
      * Saves (creates or updates) the given scanner.

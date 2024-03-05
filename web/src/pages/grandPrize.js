@@ -36,7 +36,7 @@ class GrandPrize extends BindingClass {
       }
 
       // create a white list of emails that are allowed access to this page
-      const whiteList = ["gabeguio@gmail.com", "gabe.guio@gmail.com", "69smurfs@gmail.com"];
+      const whiteList = ["gabeguio@gmail.com", "gabe.guio@gmail.com", "ed@pearsontn.org", "cameronjcyr@gmail.com"];
 
       // check whitelist, if not in whitelist, redirect to index.html
       if (!whiteList.includes(currentUser.email)) {

@@ -10,7 +10,7 @@ import options from "../data/sponsorOptions";
 class RegisterScanner extends BindingClass {
   constructor() {
     super();
-    this.bindClassMethods(["mount", "checkRegistration", , "addSponsorOptions", "submit"], this);
+    this.bindClassMethods(["mount", "checkRegistration", "addSponsorOptions", "submit"], this);
     this.dataStore = new DataStore();
     this.header = new Header(this.dataStore);
   }
