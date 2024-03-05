@@ -92,3 +92,31 @@ th {
   padding-right: 1rem;
   white-space: nowrap;
 }
+
+.raffle__title {
+  text-align: center;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  color: var(--clr-primary);
+}
+
+.raffle__btn {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 2rem;
+}
+
+.raffle__info {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.raffle-winner {
+  display: none;
+  border: 2px solid var(--clr-primary);
+  padding: 1rem;
+  max-width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+}

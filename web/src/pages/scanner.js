@@ -9,7 +9,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 class Scanner extends BindingClass {
   constructor() {
     super();
-    this.bindClassMethods(["mount", "loadScanner", "loadVisitorTable"], this);
+    this.bindClassMethods(["mount", "loadScanner", "loadVisitorTable", "loadRaffleWinner"], this);
     this.dataStore = new DataStore();
     this.header = new Header(this.dataStore);
   }
@@ -58,8 +58,13 @@ class Scanner extends BindingClass {
       const visitorsCurrentSponsor = document.getElementById("visitors__current-sponsor");
       visitorsCurrentSponsor.innerText = `View Visitors for ${scanner.sponsorName}`;
 
+      const raffleCurrentSponsor = document.getElementById("raffle__current-sponsor");
+      raffleCurrentSponsor.innerText = `Select one random visitor for ${scanner.sponsorName}`;
+
       this.dataStore.set("sponsorName", scanner.sponsorName);
+
       document.getElementById("visitors__btn").addEventListener("click", this.loadVisitorTable);
+      document.getElementById("raffle__btn").addEventListener("click", this.loadRaffleWinner);
 
       scanSpinner.style.display = "none";
     } catch (error) {
@@ -141,12 +146,12 @@ class Scanner extends BindingClass {
 
     // test data for getting the visitor list
     const visits = [
+      { visitorFullName: "Allison Doe", visitorEmail: "allison@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Jake Doe", visitorEmail: "jake@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Daniel Doe", visitorEmail: "daniel@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Alex Doe", visitorEmail: "alex@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Bob Doe", visitorEmail: "bob@email.com", visitorOrganization: "ACME" },
       { visitorFullName: "John Doe", visitorEmail: "john@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Jane Doe", visitorEmail: "jane@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Jane Doe", visitorEmail: "jane@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Jane Doe", visitorEmail: "jane@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Jane Doe", visitorEmail: "jane@email.com", visitorOrganization: "ACME" },
-      { visitorFullName: "Jane Doe", visitorEmail: "jane@email.com", visitorOrganization: "ACME" },
       { visitorFullName: "Avery Doe", visitorEmail: "avery@email.com", visitorOrganization: "ACME" },
     ];
 
@@ -170,6 +175,42 @@ class Scanner extends BindingClass {
       cell3.innerHTML = visit.visitorOrganization;
     });
     tableSpinner.style.display = "none";
+  }
+
+  loadRaffleWinner() {
+    const raffleSpinner = document.getElementById("raffle-spinner");
+    raffleSpinner.style.display = "block";
+    const raffleWinner = document.getElementById("raffle-winner");
+    raffleWinner.innerHTML = "";
+    raffleWinner.style.display = "block";
+
+    // get a random visitor from this.client.getVisits(sponsorName)
+    // const randomVisitor = this.client.getRandomVisitor(sponsorName);
+
+    const visits = [
+      { visitorFullName: "Allison Doe", visitorEmail: "allison@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Jake Doe", visitorEmail: "jake@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Daniel Doe", visitorEmail: "daniel@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Alex Doe", visitorEmail: "alex@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Bob Doe", visitorEmail: "bob@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "John Doe", visitorEmail: "john@email.com", visitorOrganization: "ACME" },
+      { visitorFullName: "Avery Doe", visitorEmail: "avery@email.com", visitorOrganization: "ACME" },
+    ];
+
+    // select random visit from visits
+    const randomVisitor = visits[Math.floor(Math.random() * visits.length)];
+
+    // display the random visitor in the raffle-winner-container
+    raffleWinner.innerHTML = `
+      <p class="raffle__info">The raffle winner is: ${randomVisitor.visitorFullName}</p>
+      <p class="raffle__info">Email: ${randomVisitor.visitorEmail}</p>
+      <p class="raffle__info">Company: ${randomVisitor.visitorOrganization}</p>
+    `;
+
+    raffleSpinner.style.display = "none";
+
+    const raffleButton = document.getElementById("raffle__btn");
+    raffleButton.style.display = "none";
   }
 }
 

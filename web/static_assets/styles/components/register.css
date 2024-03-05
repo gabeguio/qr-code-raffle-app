@@ -5,6 +5,12 @@
   color: var(--clr-primary);
 }
 
+.registration-warning {
+  text-align: center;
+  font-size: var(--size-sm);
+  color: var(--clr-error);
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -15,13 +21,13 @@
 }
 
 .form-container > form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 1rem;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
 
 .form-hidden {
   display: none;

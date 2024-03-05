@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="text/javascript" src="/assets/registerScanner.js"></script>
+    <script type="text/javascript" src="/assets/grandPrize.js"></script>
     <link rel="icon" href="" type="image/png" />
     <link rel="stylesheet" type="text/css" href="styles/modern-normalize.css" />
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
@@ -14,27 +14,26 @@
     <link rel="stylesheet" type="text/css" href="styles/components/scanner.css" />
     <link rel="stylesheet" type="text/css" href="styles/components/footer.css" />
     <link rel="stylesheet" type="text/css" href="styles/utils.css" />
-    <title>Register Scanner Page</title>
+    <title>Grand Prize Raffle</title>
   </head>
   <body>
     <main>
       <header class="header" id="header"></header>
-      <section class="registration-form container section">
-        <span class="spinner" id="registration-spinner"></span>
+      <section class="grand-prize container section">
+        <span class="spinner" id="grand-prize-spinner"></span>
         <div class="form-container form-hidden" id="form-container">
-          <h2 class="registration__title">Registration</h2>
-          <h3 class="registration-form__subtitle">Please select your sponsor</h3>
-          <p class="registration-warning">WARNING: Sponsors cannot be changed</p>
-          <form id="register-form__form">
-            <label for="sponsor-name"></label>
+          <h2 class="grand-prize__title">Grand Prize</h2>
+          <form id="grand-prize-form__form">
+            <label for="min-visited-sponsors">Input the minimum number of booths to qualify (1-20)</label>
             <p>
-              <select required class="validated-field" id="sponsor-name" name="sponsor-name" autofocus>
-                <option value="" selected disabled>Select Sponsor</option>
-              </select>
+              <input type="number" required class="validated-field" id="min-visited-sponsors" name="min-visited-sponsors" min="1" max="20" autofocus />
             </p>
-            <button type="submit" href="#" class="btn" id="register">Register Scanner</button>
+            <button href="#" class="btn" id="grand-prize__button">Get Winner</button>
           </form>
         </div>
+      </section>
+      <section class="winner container section">
+        <div class="grand-prize__winner-info hidden" id="grand-prize__winner-info"></div>
       </section>
       <footer class="footer container section">
         <h3 class="footer__title">Conference Scanner</h3>
