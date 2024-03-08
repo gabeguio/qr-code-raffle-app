@@ -1,4 +1,4 @@
-# Qr Code Raffle App
+# Conference Scanner
 
 ## Overview
 
