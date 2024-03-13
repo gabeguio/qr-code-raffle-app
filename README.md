@@ -51,5 +51,5 @@ _Image 3: Embedded QR Code Scanner to Scan Badges_
 ![Visitors Table and Raffle Selector](resources/readme-images/visitors-raffle-winner-blur.png)
 _Image 4: Scanner Can View All Visitors and Raffle Select a Random Visitor_
 
-![Grand Prize Selector](resources/readme-images/visitors-raffle-winner-blur.png)
+![Grand Prize Selector](resources/readme-images/grand-prize.png)
 _Image 5: Organizers Can Select Select a Winner Based On Unique Number of Sponsors Visited_
