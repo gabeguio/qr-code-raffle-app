@@ -39,3 +39,17 @@ _Image 1: Programming flow for user signup/registration and scanning visitors QR
 5. Use Case 6, **Get a Random Attendee by Sponsor**: A sponsor can roll a random attendee who has visited their booth to win the sponsor raffle.
 
 6. Use Case 7, **Get a Random Attendee that Visited Every Sponsor**: The Organizer would roll from a query of all random attendees who have visited every booth at the conference to win the grand prize raffle.
+
+## Pictures
+
+![Scanner Registration Page](resources/readme-images/scanner-registration.png)
+_Image 2: Scanner Registration Page_
+
+![Scanning Component](resources/readme-images/scanning-component.png)
+_Image 3: Embedded QR Code Scanner to Scan Badges_
+
+![Visitors Table and Raffle Selector](resources/readme-images/visitors-raffle-winner-blur.png)
+_Image 4: Scanner Can View All Visitors and Raffle Select a Random Visitor_
+
+![Grand Prize Selector](resources/readme-images/visitors-raffle-winner-blur.png)
+_Image 5: Organizers Can Select Select a Winner Based On Unique Number of Sponsors Visited_
