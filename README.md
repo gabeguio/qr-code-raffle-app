@@ -4,6 +4,12 @@
 
 The app is meant for sponsors at a tech conference to scan QR codes and keep track of booth visitors. Towards the end of the conference, each sponsor will select a random visitor for a sponsor prize. In addition, towards the end of the event, the conference organizers will select an attendee who has visited every sponsor for a grand prize.
 
+## Video Demo (03:34)
+[Conference Scanner - Demo(https://www.youtube.com/watch?v=tEyQImODfUw&list=PLNMBzT22r4Os9JnEfydydqtbKDCXa83li)
+[Advizex Raffle - Youtube Short](https://www.youtube.com/shorts/9bG_WHxK00Q)
+
+## Sponsor Raffle Video 
+
 ## Technology
 
 ### Frontend
