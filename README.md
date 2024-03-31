@@ -12,8 +12,6 @@ The app is meant for sponsors at a tech conference to scan QR codes and keep tra
 ### Advizex Raffle
 [Advizex Raffle - Youtube Short](https://www.youtube.com/shorts/9bG_WHxK00Q)
 
-## Sponsor Raffle Video 
-
 ## Technology
 
 ### Frontend
