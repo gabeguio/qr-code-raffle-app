@@ -27,11 +27,6 @@ The app is meant for sponsors at a tech conference to scan QR codes and keep tra
 - The conference uses [Tito Event Management](https://ti.to/developers) to provide QR codes for every attendee. These QR codes will be printed on the attendee's badges to carry around the conference and scan at each booth. The QR codes have embedded information for an attendee's contact information.
 - On the front end, the plan is to use an [embedded QR scanner](https://www.webqr.com/index.html) for the sponsors to pull up on their phones to scan attendees.
 
-## User Flow Diagram
-
-![User Flow Diagram](resources/readme-images/qr-code-raffle-app_wireframe-v1.png)
-_Image 1: Programming flow for user signup/registration and scanning visitors QR code_
-
 ## User Stories
 
 1. Use Case 1, **Get Scanner**: Retrieve the scanner profile based on the user's email. If a single sponsor has not been set, then redirect the user to create a scanner profile.
